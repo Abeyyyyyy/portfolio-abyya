@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+:root {
+  --tv-red: #7B1E2B;
+  --tv-black: #0D0D0D;
+  --tv-cream: #F5E9E2;
+  --tv-pink: #D8A7B1;
+  --tv-navy: #1F2A44;
+  --tv-brown: #5A3E36;
+  --tv-gray: #BFB7B2;
+}
