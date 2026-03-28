@@ -40,6 +40,12 @@ const Education = forwardRef(({ t, data }, ref) => {
           ))}
         </div>
       </div>
+
+      <style>{`
+  @media (max-width: 768px) {
+    .edu-grid { grid-template-columns: 1fr !important; }
+  }
+`}</style>
     </section>
   )
 })

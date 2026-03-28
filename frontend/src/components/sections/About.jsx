@@ -88,6 +88,15 @@ const About = forwardRef(({ t }, ref) => {
           </div>
         </div>
       </div>
+
+            <style>{`
+      @media (max-width: 768px) {
+    .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+    .about-grid h2 { font-size: 32px !important; }
+  }
+`}</style>
+
+
     </section>
   )
 })

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import LoadingScreen from '../components/LoadingScreen'
+import DataLoader from '../components/DataLoader'
 import CustomCursor from '../components/CustomCursor'
 import Sidebar from '../components/Sidebar'
 import Hero from '../components/sections/Hero'
@@ -7,19 +8,20 @@ import About from '../components/sections/About'
 import Skills from '../components/sections/Skills'
 import Projects from '../components/sections/Projects'
 import Experience from '../components/sections/Experience'
+import Education from '../components/sections/Education'
 import Certificates from '../components/sections/Certificates'
 import Testimonials from '../components/sections/Testimonials'
 import FunFacts from '../components/sections/FunFacts'
 import Blog from '../components/sections/Blog'
 import Contact from '../components/sections/Contact'
 import api from '../services/api'
-import Education from '../components/sections/Education'
+import { startKeepAlive } from '../utils/keepAlive'
 
 function Home() {
-  const [loading, setLoading] = useState(true)
+  const [introLoading, setIntroLoading] = useState(true)
+  const [dataLoading, setDataLoading] = useState(true)
   const [isDark, setIsDark] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
-
   const [data, setData] = useState({
     projects: [], skills: [], experiences: [],
     certificates: [], testimonials: [], blogs: [], educations: [],
@@ -31,19 +33,18 @@ function Home() {
     skills: useRef(null),
     projects: useRef(null),
     experience: useRef(null),
+    education: useRef(null),
     certificates: useRef(null),
     testimonials: useRef(null),
     funfacts: useRef(null),
     blog: useRef(null),
     contact: useRef(null),
-    education: useRef(null),
   }
 
   const t = {
     bg: isDark ? '#0D0D0D' : '#F2E8DF',
-    bg2: isDark ? '#111827' : '#E8D5C4',
-    bg3: isDark ? '#1F2A44' : '#DEC9B5',
-    border: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(13,13,13,0.1)',
+    bg2: isDark ? '#111827' : '#EDE0D8',
+    border: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(13,13,13,0.08)',
     border2: isDark ? 'rgba(255,255,255,0.12)' : 'rgba(13,13,13,0.18)',
     text: isDark ? '#F0EDE8' : '#0D0D0D',
     textMuted: isDark ? 'rgba(240,237,232,0.6)' : 'rgba(13,13,13,0.6)',
@@ -55,12 +56,11 @@ function Home() {
     navy: '#1F2A44',
     navySoft: 'rgba(31,42,68,0.12)',
     cream: '#F2E8DF',
-    gold: '#C4962A',
-    goldSoft: 'rgba(196,150,42,0.1)',
     grid: isDark ? 'rgba(255,255,255,0.018)' : 'rgba(13,13,13,0.04)',
   }
 
-    useEffect(() => {
+  useEffect(() => {
+    startKeepAlive()
     Promise.all([
       api.get('/projects'),
       api.get('/skills'),
@@ -71,30 +71,36 @@ function Home() {
       api.get('/educations'),
     ]).then(([p, s, e, c, t2, b, edu]) => {
       setData({
-        projects: p.data,
-        skills: s.data,
-        experiences: e.data,
-        certificates: c.data,
-        testimonials: t2.data,
-        blogs: b.data,
+        projects: p.data, skills: s.data,
+        experiences: e.data, certificates: c.data,
+        testimonials: t2.data, blogs: b.data,
         educations: edu.data,
       })
-    }).catch(() => {})
+      setDataLoading(false)
+    }).catch(() => {
+      setDataLoading(false)
+    })
   }, [])
 
   useEffect(() => {
-    if (loading) return
+    if (introLoading || dataLoading) return
     const observer = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) setActiveSection(e.target.id) }),
       { threshold: 0.35 }
     )
     Object.values(refs).forEach(r => { if (r.current) observer.observe(r.current) })
     return () => observer.disconnect()
-  }, [loading])
+  }, [introLoading, dataLoading])
 
   const navigateTo = (id) => refs[id]?.current?.scrollIntoView({ behavior: 'smooth' })
 
-  if (loading) return <LoadingScreen onComplete={() => setLoading(false)} />
+  if (introLoading) return (
+    <LoadingScreen onComplete={() => setIntroLoading(false)} />
+  )
+
+  if (dataLoading) return (
+    <DataLoader isDark={isDark} />
+  )
 
   return (
     <div style={{ background: t.bg, color: t.text, transition: 'background 0.4s, color 0.4s', cursor: 'none', fontFamily: "'Inter', sans-serif" }}>
@@ -123,16 +129,17 @@ function Home() {
       </main>
 
       <style>{`
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-  * { cursor: none !important; box-sizing: border-box; }
-  ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #7B1E2B; border-radius: 2px; }
-  @media (max-width: 768px) {
-    #main-content { margin-left: 0 !important; padding-top: 53px; }
-    * { cursor: auto !important; }
-  }
-`}</style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+        * { cursor: none !important; box-sizing: border-box; }
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #7B1E2B; border-radius: 2px; }
+        @media (max-width: 768px) {
+          #main-content { margin-left: 0 !important; padding-top: 53px; }
+          * { cursor: auto !important; }
+        }
+      `}</style>
     </div>
   )
 }

@@ -51,6 +51,15 @@ const Certificates = forwardRef(({ t, data }, ref) => {
           </div>
         )}
       </div>
+
+      <style>{`
+  @media (max-width: 1024px) {
+    .cert-grid { grid-template-columns: 1fr 1fr !important; }
+  }
+  @media (max-width: 768px) {
+    .cert-grid { grid-template-columns: 1fr !important; }
+  }
+`}</style>
     </section>
   )
 })

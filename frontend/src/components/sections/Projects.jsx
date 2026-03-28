@@ -115,6 +115,13 @@ const Projects = forwardRef(({ t, data }, ref) => {
           </div>
         )}
       </div>
+
+      <style>{`
+  @media (max-width: 768px) {
+    .projects-grid { grid-template-columns: 1fr !important; }
+    .projects-grid > div { grid-column: span 1 !important; }
+  }
+`}</style>
     </section>
   )
 })

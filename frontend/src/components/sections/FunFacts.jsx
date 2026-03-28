@@ -100,6 +100,17 @@ const FunFacts = forwardRef(({ t }, ref) => {
           </div>
         </div>
       </div>
+
+      <style>{`
+  @media (max-width: 1024px) {
+    .facts-grid { grid-template-columns: 1fr 1fr !important; }
+    .facts-bottom { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 768px) {
+    .facts-grid { grid-template-columns: 1fr 1fr !important; }
+    .hobbies-grid { grid-template-columns: 1fr 1fr !important; }
+  }
+`}</style>
     </section>
   )
 })

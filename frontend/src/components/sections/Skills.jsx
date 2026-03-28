@@ -94,6 +94,15 @@ const Skills = forwardRef(({ t, data, activeSection }, ref) => {
           </div>
         )}
       </div>
+
+      <style>{`
+  @media (max-width: 1024px) {
+    .skills-grid { grid-template-columns: 1fr 1fr !important; }
+  }
+  @media (max-width: 768px) {
+    .skills-grid { grid-template-columns: 1fr !important; }
+  }
+`}</style>
     </section>
   )
 })

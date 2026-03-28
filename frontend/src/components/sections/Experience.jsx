@@ -59,6 +59,12 @@ const Experience = forwardRef(({ t, data }, ref) => {
           </div>
         </div>
       </div>
+
+      <style>{`
+  @media (max-width: 768px) {
+    .exp-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  }
+`}</style>
     </section>
   )
 })

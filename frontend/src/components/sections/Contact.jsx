@@ -206,6 +206,12 @@ const Contact = forwardRef(({ t }, ref) => {
       <style>{`
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
       `}</style>
+
+      <style>{`
+  @media (max-width: 768px) {
+    .contact-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  }
+`}</style>
     </section>
   )
 })

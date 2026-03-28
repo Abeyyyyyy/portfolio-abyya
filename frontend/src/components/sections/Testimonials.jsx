@@ -57,6 +57,12 @@ const Testimonials = forwardRef(({ t, data }, ref) => {
           ))}
         </div>
       </div>
+
+      <style>{`
+  @media (max-width: 768px) {
+    .testi-grid { grid-template-columns: 1fr !important; }
+  }
+`}</style>
     </section>
   )
 })

@@ -82,6 +82,15 @@ const Blog = forwardRef(({ t, data }, ref) => {
           ))}
         </div>
       </div>
+
+      <style>{`
+  @media (max-width: 1024px) {
+    .blog-grid { grid-template-columns: 1fr 1fr !important; }
+  }
+  @media (max-width: 768px) {
+    .blog-grid { grid-template-columns: 1fr !important; }
+  }
+`}</style>
     </section>
   )
 })
