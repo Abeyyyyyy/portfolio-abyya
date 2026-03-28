@@ -23,7 +23,7 @@ const Certificates = forwardRef(({ t, data }, ref) => {
             Belum ada sertifikat. Tambahkan di admin panel!
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '18px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '18px' }} className="cert-grid">
             {data.certificates.map(cert => (
               <div key={cert.id}
                 style={{ background: t.bg, border: `0.5px solid ${t.border}`, borderRadius: '14px', padding: '24px', transition: 'all 0.3s', cursor: cert.credential_url ? 'none' : 'default', position: 'relative', overflow: 'hidden' }}

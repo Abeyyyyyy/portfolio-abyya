@@ -40,7 +40,7 @@ const FunFacts = forwardRef(({ t }, ref) => {
         </h2>
 
         {/* Stats */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '16px', marginBottom: '64px' }} className="facts-grid">
           {facts.map((f, i) => (
             <div key={i} style={{ background: t.bg, border: `0.5px solid ${t.border}`, borderRadius: '14px', padding: '24px', textAlign: 'center', transition: 'all 0.3s' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = t.accent; e.currentTarget.style.transform = 'translateY(-4px)' }}
@@ -52,7 +52,7 @@ const FunFacts = forwardRef(({ t }, ref) => {
           ))}
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px' }} className="facts-bottom">
 
           {/* Hobbies */}
           <div>
@@ -60,7 +60,7 @@ const FunFacts = forwardRef(({ t }, ref) => {
               Hobbies & Interests
               <span style={{ flex: 1, height: '0.5px', background: t.border }} />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }} className="hobbies-grid">
               {hobbies.map((h, i) => (
                 <div key={i} style={{ background: t.bg, border: `0.5px solid ${t.border}`, borderRadius: '12px', padding: '20px', transition: 'all 0.3s' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = t.accent; e.currentTarget.style.transform = 'translateY(-3px)' }}

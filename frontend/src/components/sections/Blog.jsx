@@ -47,7 +47,7 @@ const Blog = forwardRef(({ t, data }, ref) => {
           <span style={{ fontSize: '11px', color: t.textFaint, letterSpacing: '1px' }}>Coming soon</span>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '20px' }} className="blog-grid">
           {posts.map((post, i) => (
             <div key={i} style={{
               background: t.bg2, border: `0.5px solid ${t.border}`,

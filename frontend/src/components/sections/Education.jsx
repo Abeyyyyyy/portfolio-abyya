@@ -18,7 +18,7 @@ const Education = forwardRef(({ t, data }, ref) => {
           My <span style={{ color: t.accent }}>Background</span>
         </h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '16px' }} className="edu-grid">
           {data.educations.length === 0 ? (
             <p style={{ color: t.textFaint, fontSize: '13px' }}>Belum ada data pendidikan.</p>
           ) : data.educations.map(edu => (

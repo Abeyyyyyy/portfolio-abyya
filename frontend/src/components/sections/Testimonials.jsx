@@ -29,7 +29,7 @@ const Testimonials = forwardRef(({ t, data }, ref) => {
           What They <span style={{ color: t.accent }}>Say</span>
         </h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }} className="testi-grid">
           {testimonials.map((t2, i) => (
             <div key={i} style={{
               background: t.bg2, border: `0.5px solid ${t.border}`,

@@ -64,7 +64,7 @@ const Contact = forwardRef(({ t }, ref) => {
           Terbuka untuk kolaborasi, diskusi project, atau sekadar ngobrol soal tech!
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px' }} className="contact-grid">
 
           {/* Form */}
           <div>

@@ -24,7 +24,7 @@ const Experience = forwardRef(({ t, data }, ref) => {
           My <span style={{ color: t.accent }}>Journey</span>
         </h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '48px' }} className="exp-grid">
 
           {/* Work */}
           <div>

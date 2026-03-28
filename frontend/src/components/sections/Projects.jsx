@@ -36,7 +36,7 @@ const Projects = forwardRef(({ t, data }, ref) => {
             Belum ada project. Tambahkan di admin panel!
           </div>
         ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }} className="projects-grid">
             {data.projects.map((project, idx) => (
               <div
                 key={project.id}

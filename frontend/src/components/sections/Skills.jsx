@@ -33,7 +33,7 @@ const Skills = forwardRef(({ t, data, activeSection }, ref) => {
         </h2>
 
         {/* Tech skills */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '48px', marginBottom: '64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '48px', marginBottom: '64px' }} className="skills-grid">
           {categories.map(cat => {
             const catSkills = data.skills.filter(s => s.category === cat.key)
             if (catSkills.length === 0) return null

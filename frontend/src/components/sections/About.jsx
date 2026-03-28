@@ -27,7 +27,7 @@ const About = forwardRef(({ t }, ref) => {
           <span style={{ color: t.accent }}>Web Development</span>
         </h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '64px' }} className="about-grid">
 
           {/* Left */}
           <div>

@@ -1,0 +1,51 @@
+/* Global responsive */
+* { box-sizing: border-box; }
+
+/* Section padding */
+@media (max-width: 1024px) {
+  section { padding-left: 40px !important; padding-right: 40px !important; }
+}
+
+@media (max-width: 768px) {
+  section { padding-left: 24px !important; padding-right: 24px !important; padding-top: 60px !important; padding-bottom: 60px !important; }
+  
+  /* About */
+  .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  
+  /* Skills */
+  .skills-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  
+  /* Projects */
+  .projects-grid { grid-template-columns: 1fr !important; }
+  
+  /* Experience */
+  .exp-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+  
+  /* Certificates */
+  .cert-grid { grid-template-columns: 1fr 1fr !important; }
+  
+  /* FunFacts */
+  .facts-grid { grid-template-columns: 1fr 1fr !important; }
+  .facts-bottom { grid-template-columns: 1fr !important; gap: 32px !important; }
+  .hobbies-grid { grid-template-columns: 1fr 1fr !important; }
+  
+  /* Blog */
+  .blog-grid { grid-template-columns: 1fr !important; }
+  
+  /* Contact */
+  .contact-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+  
+  /* Testimonials */
+  .testi-grid { grid-template-columns: 1fr !important; }
+
+  /* Education */
+  .edu-grid { grid-template-columns: 1fr !important; }
+
+  /* H2 headings */
+  h2 { font-size: 32px !important; letter-spacing: -1px !important; }
+}
+
+@media (max-width: 480px) {
+  .cert-grid { grid-template-columns: 1fr !important; }
+  .facts-grid { grid-template-columns: 1fr 1fr !important; }
+}

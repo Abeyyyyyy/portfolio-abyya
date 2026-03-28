@@ -29,13 +29,13 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
       minHeight: '100vh', padding: '0 64px',
       display: 'flex', alignItems: 'center',
       position: 'relative', overflow: 'hidden',
-    }}>
+    }} className="hero-section">
 
       {/* Background blobs */}
       <div style={{ position: 'absolute', top: '5%', right: '5%', width: '480px', height: '480px', borderRadius: '50%', background: `radial-gradient(circle, rgba(123,30,43,0.08) 0%, transparent 70%)`, pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', bottom: '10%', right: '20%', width: '300px', height: '300px', borderRadius: '50%', background: `radial-gradient(circle, rgba(31,42,68,0.08) 0%, transparent 70%)`, pointerEvents: 'none' }} />
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '80px', alignItems: 'center', width: '100%', maxWidth: '1100px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '80px', alignItems: 'center', width: '100%', maxWidth: '1100px' }} className="hero-grid">
 
         {/* Left */}
         <div>
@@ -88,7 +88,7 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
         </div>
 
         {/* Right — Profile Photo */}
-        <div style={{ position: 'relative', flexShrink: 0 }}>
+        <div style={{ position: 'relative', flexShrink: 0 }} className="hero-photo">
           <div style={{
             width: '280px', height: '340px',
             borderRadius: '120px 120px 120px 40px',
@@ -127,7 +127,7 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
       </div>
 
       {/* Stats bottom */}
-      <div style={{ position: 'absolute', bottom: '48px', right: '64px', display: 'flex', gap: '48px' }}>
+      <div style={{ position: 'absolute', bottom: '48px', right: '64px', display: 'flex', gap: '48px' }} className="hero-stats">
         {[
           { n: `${data.projects.length}+`, l: 'Projects' },
           { n: '3', l: 'Languages' },
@@ -141,8 +141,21 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
       </div>
 
       <style>{`
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-      `}</style>
+      @media (max-width: 1024px) {
+        .hero-section { padding: 80px 40px !important; }
+        .hero-grid { grid-template-columns: 1fr !important; }
+        .hero-photo { display: none !important; }
+        .hero-title { font-size: 52px !important; }
+        .hero-stats { bottom: 24px !important; right: 40px !important; gap: 24px !important; }
+      }
+      @media (max-width: 768px) {
+        .hero-section { padding: 40px 24px 80px !important; }
+        .hero-title { font-size: 40px !important; letter-spacing: -1px !important; }
+        .hero-stats { position: static !important; margin-top: 40px; justify-content: flex-start; }
+        .hero-buttons { flex-wrap: wrap !important; }
+        .scroll-hint { display: none !important; }
+      }
+    `}</style>
     </section>
   )
 })

@@ -108,7 +108,7 @@ function Home() {
 
       <Sidebar activeSection={activeSection} onNavigate={navigateTo} isDark={isDark} onToggleMode={() => setIsDark(!isDark)} />
 
-      <main style={{ marginLeft: '52px', position: 'relative', zIndex: 1 }}>
+      <main style={{ marginLeft: '52px', position: 'relative', zIndex: 1 }} id="main-content">
         <Hero ref={refs.hero} t={t} data={data} navigateTo={navigateTo} />
         <About ref={refs.about} t={t} />
         <Skills ref={refs.skills} t={t} data={data} activeSection={activeSection} />
@@ -123,13 +123,16 @@ function Home() {
       </main>
 
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-        * { cursor: none !important; box-sizing: border-box; }
-        ::-webkit-scrollbar { width: 3px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #7B1E2B; border-radius: 2px; }
-      `}</style>
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  * { cursor: none !important; box-sizing: border-box; }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #7B1E2B; border-radius: 2px; }
+  @media (max-width: 768px) {
+    #main-content { margin-left: 0 !important; padding-top: 53px; }
+    * { cursor: auto !important; }
+  }
+`}</style>
     </div>
   )
 }
