@@ -47,10 +47,10 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
           </div>
 
           <h1 style={{ fontSize: '72px', fontWeight: '700', lineHeight: 1.0, letterSpacing: '-3px', marginBottom: '0' }}>
-  <span style={{ display: 'block', color: t.text }} className="hero-name">Abiyya</span>
-  <span style={{ display: 'block', color: t.accent }} className="hero-name">Hamdan</span>
-  <span style={{ display: 'block', color: t.textFaint, fontWeight: '300', fontSize: '58px' }} className="hero-name-sub">Nurwandha</span>
-</h1>
+            <span style={{ display: 'block', color: t.text }} className="hero-name">Abiyya</span>
+            <span style={{ display: 'block', color: t.accent }} className="hero-name">Hamdan</span>
+            <span style={{ display: 'block', color: t.textFaint, fontWeight: '300', fontSize: '58px' }} className="hero-name-sub">Nurwandha</span>
+          </h1>
 
           <div style={{ height: '28px', display: 'flex', alignItems: 'center', gap: '4px', margin: '24px 0 28px' }}>
             <span style={{ fontSize: '17px', color: t.textMuted }}>{typed}</span>
@@ -85,9 +85,24 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
               Contact Me
             </button>
           </div>
+
+          {/* ✅ Stats mobile */}
+          <div style={{ display: 'none', gap: '32px', marginTop: '32px' }} className="hero-stats-mobile">
+            {[
+              { n: `${data.projects.length}+`, l: 'Projects' },
+              { n: '3', l: 'Languages' },
+              { n: `${data.skills.length}`, l: 'Skills' },
+            ].map((s, i) => (
+              <div key={i}>
+                <div style={{ fontSize: '28px', fontWeight: '700', color: t.accent, lineHeight: 1, letterSpacing: '-1px' }}>{s.n}</div>
+                <div style={{ fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase', color: t.textFaint, marginTop: '4px' }}>{s.l}</div>
+              </div>
+            ))}
+          </div>
+
         </div>
 
-        {/* Right — Profile Photo */}
+        {/* Right */}
         <div style={{ position: 'relative', flexShrink: 0 }} className="hero-photo">
           <div style={{
             width: '280px', height: '340px',
@@ -95,72 +110,47 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
             overflow: 'hidden', position: 'relative',
             border: `2px solid ${t.border2}`,
           }}>
-            <img
-              src="/images/profile.jpg"
-              alt="Abiyya Hamdan Nurwandha"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              onError={e => {
-                e.target.style.display = 'none'
-                e.target.parentElement.style.background = `linear-gradient(135deg, ${t.bg2}, ${t.navy})`
-                e.target.parentElement.innerHTML += `<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><div style="font-size:64px;font-weight:700;color:rgba(242,232,223,0.2);letter-spacing:-2px">AHN</div><div style="font-size:11px;letter-spacing:3px;color:rgba(242,232,223,0.2);text-transform:uppercase">Photo Soon</div></div>`
-              }}
-            />
-            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, ${t.accent}22, transparent 60%)` }} />
-          </div>
-
-          {/* Accent corner */}
-          <div style={{ position: 'absolute', bottom: '-12px', left: '-12px', width: '80px', height: '80px', borderRadius: '20px', background: t.accent, opacity: 0.15 }} />
-          <div style={{ position: 'absolute', top: '-12px', right: '-12px', width: '48px', height: '48px', borderRadius: '12px', background: t.navy, opacity: 0.2 }} />
-
-          {/* Status badge */}
-          <div style={{
-            position: 'absolute', bottom: '24px', left: '-24px',
-            background: t.bg, border: `1px solid ${t.border2}`,
-            borderRadius: '40px', padding: '10px 18px',
-            display: 'flex', alignItems: 'center', gap: '8px',
-            boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
-          }}>
-            <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#4ade80', animation: 'pulse 2s ease-in-out infinite' }} />
-            <span style={{ fontSize: '11px', color: t.textMuted, letterSpacing: '0.5px', whiteSpace: 'nowrap' }}>Available for PKL</span>
+            <img src="/images/profile.jpg" alt="Abiyya Hamdan Nurwandha"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
         </div>
       </div>
 
-      {/* Stats bottom */}
-      <div style={{ position: 'absolute', bottom: '48px', right: '64px', display: 'flex', gap: '48px' }} className="hero-stats">
+      {/* ✅ Stats desktop */}
+      <div style={{
+        position: 'absolute', bottom: '48px', right: '64px',
+        display: 'flex', gap: '48px'
+      }} className="hero-stats">
         {[
           { n: `${data.projects.length}+`, l: 'Projects' },
           { n: '3', l: 'Languages' },
           { n: `${data.skills.length}`, l: 'Skills' },
         ].map((s, i) => (
           <div key={i} style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '32px', fontWeight: '700', color: t.accent, lineHeight: 1, letterSpacing: '-1px' }}>{s.n}</div>
-            <div style={{ fontSize: '9px', letterSpacing: '2.5px', textTransform: 'uppercase', color: t.textFaint, marginTop: '6px' }}>{s.l}</div>
+            <div style={{ fontSize: '32px', fontWeight: '700', color: t.accent }}>{s.n}</div>
+            <div style={{ fontSize: '9px', color: t.textFaint }}>{s.l}</div>
           </div>
         ))}
       </div>
 
-      <style>{`
-  @media (max-width: 1024px) {
-    .hero-section { padding: 60px 40px 120px !important; align-items: flex-start !important; }
-    .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
-    .hero-photo { display: none !important; }
-  }
+        <style>{`
   @media (max-width: 768px) {
-    .hero-section { padding: 40px 24px 160px !important; }
+    .hero-section { padding: 40px 24px 60px !important; }
+    .hero-grid { grid-template-columns: 1fr !important; }
+    .hero-photo { display: none !important; }
     .hero-name { font-size: 52px !important; letter-spacing: -2px !important; }
     .hero-name-sub { font-size: 42px !important; }
-    .hero-desc { font-size: 14px !important; max-width: 100% !important; margin-bottom: 32px !important; }
+    .hero-desc { font-size: 14px !important; max-width: 100% !important; }
     .hero-buttons { flex-direction: column !important; gap: 10px !important; }
-    .hero-buttons button, .hero-buttons a { width: 100% !important; text-align: center !important; justify-content: center !important; }
-    .hero-stats { position: static !important; margin-top: 40px !important; justify-content: flex-start !important; gap: 32px !important; display: flex !important; }
-    .hero-stats > div { text-align: left !important; }
+    .hero-buttons button, .hero-buttons a { width: 100% !important; text-align: center !important; }
+    .hero-stats { display: none !important; }
+    .hero-stats-mobile { display: flex !important; }
+    .hero-eyebrow { font-size: 9px !important; letter-spacing: 2px !important; flex-wrap: wrap !important; }
     .scroll-hint { display: none !important; }
-    .hero-eyebrow { font-size: 9px !important; letter-spacing: 2px !important; }
   }
   @media (max-width: 380px) {
-    .hero-name { font-size: 42px !important; }
-    .hero-name-sub { font-size: 34px !important; }
+    .hero-name { font-size: 40px !important; }
+    .hero-name-sub { font-size: 32px !important; }
   }
 `}</style>
     </section>
