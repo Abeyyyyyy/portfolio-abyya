@@ -47,23 +47,23 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
           </div>
 
           <h1 style={{ fontSize: '72px', fontWeight: '700', lineHeight: 1.0, letterSpacing: '-3px', marginBottom: '0' }}>
-            <span style={{ display: 'block', color: t.text }}>Abiyya</span>
-            <span style={{ display: 'block', color: t.accent }}>Hamdan</span>
-            <span style={{ display: 'block', color: t.textFaint, fontWeight: '300', fontSize: '58px' }}>Nurwandha</span>
-          </h1>
+  <span style={{ display: 'block', color: t.text }} className="hero-name">Abiyya</span>
+  <span style={{ display: 'block', color: t.accent }} className="hero-name">Hamdan</span>
+  <span style={{ display: 'block', color: t.textFaint, fontWeight: '300', fontSize: '58px' }} className="hero-name-sub">Nurwandha</span>
+</h1>
 
           <div style={{ height: '28px', display: 'flex', alignItems: 'center', gap: '4px', margin: '24px 0 28px' }}>
             <span style={{ fontSize: '17px', color: t.textMuted }}>{typed}</span>
             <span style={{ display: 'inline-block', width: '2px', height: '20px', background: t.accent, animation: 'blink 1s step-end infinite' }} />
           </div>
 
-          <p style={{ fontSize: '15px', color: t.textFaint, lineHeight: 1.9, maxWidth: '460px', marginBottom: '48px' }}>
+          <p style={{ fontSize: '15px', color: t.textFaint, lineHeight: 1.9, maxWidth: '460px', marginBottom: '48px' }} className="hero-desc">
             Membangun solusi digital yang bersih dan terstruktur
             menggunakan Laravel dan React.js. Aktif di komunitas
             ORBIT dan terus berkembang lewat proyek nyata.
           </p>
 
-          <div style={{ display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap' }} className="hero-buttons">
             <button onClick={() => navigateTo('projects')}
               style={{ background: t.accent, color: '#F2E8DF', border: 'none', borderRadius: '8px', padding: '15px 36px', fontSize: '11px', fontWeight: '600', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: `0 8px 24px rgba(123,30,43,0.25)` }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = `0 12px 32px rgba(123,30,43,0.35)` }}
@@ -141,21 +141,28 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
       </div>
 
       <style>{`
-      @media (max-width: 1024px) {
-        .hero-section { padding: 80px 40px !important; }
-        .hero-grid { grid-template-columns: 1fr !important; }
-        .hero-photo { display: none !important; }
-        .hero-title { font-size: 52px !important; }
-        .hero-stats { bottom: 24px !important; right: 40px !important; gap: 24px !important; }
-      }
-      @media (max-width: 768px) {
-        .hero-section { padding: 40px 24px 80px !important; }
-        .hero-title { font-size: 40px !important; letter-spacing: -1px !important; }
-        .hero-stats { position: static !important; margin-top: 40px; justify-content: flex-start; }
-        .hero-buttons { flex-wrap: wrap !important; }
-        .scroll-hint { display: none !important; }
-      }
-    `}</style>
+  @media (max-width: 1024px) {
+    .hero-section { padding: 60px 40px 120px !important; align-items: flex-start !important; }
+    .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+    .hero-photo { display: none !important; }
+  }
+  @media (max-width: 768px) {
+    .hero-section { padding: 40px 24px 160px !important; }
+    .hero-name { font-size: 52px !important; letter-spacing: -2px !important; }
+    .hero-name-sub { font-size: 42px !important; }
+    .hero-desc { font-size: 14px !important; max-width: 100% !important; margin-bottom: 32px !important; }
+    .hero-buttons { flex-direction: column !important; gap: 10px !important; }
+    .hero-buttons button, .hero-buttons a { width: 100% !important; text-align: center !important; justify-content: center !important; }
+    .hero-stats { position: static !important; margin-top: 40px !important; justify-content: flex-start !important; gap: 32px !important; display: flex !important; }
+    .hero-stats > div { text-align: left !important; }
+    .scroll-hint { display: none !important; }
+    .hero-eyebrow { font-size: 9px !important; letter-spacing: 2px !important; }
+  }
+  @media (max-width: 380px) {
+    .hero-name { font-size: 42px !important; }
+    .hero-name-sub { font-size: 34px !important; }
+  }
+`}</style>
     </section>
   )
 })
