@@ -40,6 +40,7 @@ const Contact = forwardRef(({ t }, ref) => {
     <section
       id="contact"
       ref={ref}
+      className="contact-section"
       style={{
         minHeight: '100vh',
         padding: '100px 64px',
@@ -47,7 +48,6 @@ const Contact = forwardRef(({ t }, ref) => {
         alignItems: 'center',
         background: t.bg2,
         transition: 'background 0.4s',
-        position: 'relative',
       }}
     >
       <div style={{ width: '100%', maxWidth: '900px' }}>
@@ -187,20 +187,26 @@ const Contact = forwardRef(({ t }, ref) => {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Footer */}
-      <div style={{
-        position: 'absolute', bottom: '32px', left: '64px', right: '64px',
-        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-        paddingTop: '20px', borderTop: `0.5px solid ${t.border}`,
-      }}>
-        <span style={{ fontSize: '11px', color: t.textFaint, letterSpacing: '1px' }}>
-          2025 Abiyya Hamdan Nurwandha
-        </span>
-        <span style={{ fontSize: '11px', color: t.textFaint, letterSpacing: '1px' }}>
-          Built with React.js + Laravel
-        </span>
+        {/* Footer */}
+        <div style={{
+          marginTop: '48px',
+          paddingTop: '20px',
+          borderTop: `0.5px solid ${t.border}`,
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap',
+          gap: '8px',
+        }}>
+          <span style={{ fontSize: '11px', color: t.textFaint, letterSpacing: '1px' }}>
+            2025 Abiyya Hamdan Nurwandha
+          </span>
+          <span style={{ fontSize: '11px', color: t.textFaint, letterSpacing: '1px' }}>
+            Built with React.js + Laravel
+          </span>
+        </div>
+
       </div>
 
       <style>{`
@@ -208,10 +214,11 @@ const Contact = forwardRef(({ t }, ref) => {
       `}</style>
 
       <style>{`
-  @media (max-width: 768px) {
-    .contact-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-  }
-`}</style>
+        @media (max-width: 768px) {
+          .contact-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
+          .contact-section { padding: 60px 24px !important; }
+        }
+      `}</style>
     </section>
   )
 })

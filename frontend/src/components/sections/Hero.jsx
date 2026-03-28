@@ -39,6 +39,29 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
 
         {/* Left */}
         <div>
+
+          {/* ✅ Photo mobile */}
+          <div style={{ display: 'none' }} className="hero-photo-mobile">
+            <div style={{
+              width: '120px', height: '120px',
+              borderRadius: '50%',
+              overflow: 'hidden',
+              border: `2px solid ${t.border2}`,
+              margin: '0 0 24px 0',
+            }}>
+              <img
+                src="/images/profile.jpg"
+                alt="Abiyya Hamdan Nurwandha"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={e => {
+                  e.target.style.display = 'none'
+                  e.target.parentElement.style.background = `linear-gradient(135deg, ${t.bg2}, ${t.navy})`
+                  e.target.parentElement.innerHTML += `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:rgba(123,30,43,0.4)">AHN</div>`
+                }}
+              />
+            </div>
+          </div>
+
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
             <div style={{ width: '32px', height: '1px', background: t.accent }} />
             <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.textFaint }}>
@@ -86,7 +109,7 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
             </button>
           </div>
 
-          {/* ✅ Stats mobile */}
+          {/* Stats mobile */}
           <div style={{ display: 'none', gap: '32px', marginTop: '32px' }} className="hero-stats-mobile">
             {[
               { n: `${data.projects.length}+`, l: 'Projects' },
@@ -94,8 +117,8 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
               { n: `${data.skills.length}`, l: 'Skills' },
             ].map((s, i) => (
               <div key={i}>
-                <div style={{ fontSize: '28px', fontWeight: '700', color: t.accent, lineHeight: 1, letterSpacing: '-1px' }}>{s.n}</div>
-                <div style={{ fontSize: '9px', letterSpacing: '2px', textTransform: 'uppercase', color: t.textFaint, marginTop: '4px' }}>{s.l}</div>
+                <div style={{ fontSize: '28px', fontWeight: '700', color: t.accent }}>{s.n}</div>
+                <div style={{ fontSize: '9px', color: t.textFaint }}>{s.l}</div>
               </div>
             ))}
           </div>
@@ -116,7 +139,7 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
         </div>
       </div>
 
-      {/* ✅ Stats desktop */}
+      {/* Stats desktop */}
       <div style={{
         position: 'absolute', bottom: '48px', right: '64px',
         display: 'flex', gap: '48px'
@@ -133,26 +156,19 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
         ))}
       </div>
 
-        <style>{`
+      <style>{`
   @media (max-width: 768px) {
+    .hero-photo-mobile { display: block !important; }
     .hero-section { padding: 40px 24px 60px !important; }
     .hero-grid { grid-template-columns: 1fr !important; }
     .hero-photo { display: none !important; }
-    .hero-name { font-size: 52px !important; letter-spacing: -2px !important; }
+    .hero-name { font-size: 52px !important; }
     .hero-name-sub { font-size: 42px !important; }
-    .hero-desc { font-size: 14px !important; max-width: 100% !important; }
-    .hero-buttons { flex-direction: column !important; gap: 10px !important; }
-    .hero-buttons button, .hero-buttons a { width: 100% !important; text-align: center !important; }
     .hero-stats { display: none !important; }
     .hero-stats-mobile { display: flex !important; }
-    .hero-eyebrow { font-size: 9px !important; letter-spacing: 2px !important; flex-wrap: wrap !important; }
-    .scroll-hint { display: none !important; }
-  }
-  @media (max-width: 380px) {
-    .hero-name { font-size: 40px !important; }
-    .hero-name-sub { font-size: 32px !important; }
   }
 `}</style>
+
     </section>
   )
 })
