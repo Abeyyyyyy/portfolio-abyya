@@ -120,81 +120,64 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
           </div>
         </div>
 
-        {/* RIGHT — Card Stack */}
-        <div style={{ position: 'relative', flexShrink: 0, width: '320px', height: '420px' }} className="hero-photo">
+        {/* RIGHT — Flip Card */}
+        <div style={{ position: 'relative', flexShrink: 0, width: '300px', height: '420px' }} className="hero-photo">
 
-          {/* Card 3 — belakang */}
           <div style={{
-            position: 'absolute', top: 0, left: 0,
-            width: '240px', height: '300px',
-            borderRadius: '120px 120px 120px 40px',
-            overflow: 'hidden',
-            border: `2px solid ${t.border2}`,
-            animation: 'card3anim 6s ease-in-out infinite',
-          }}>
-            <img src="/images/profile-coding.jpg" alt="coding"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              onError={e => {
-                e.target.style.display = 'none'
-                e.target.parentElement.style.background = `linear-gradient(135deg, ${t.navy}, #2d3f6b)`
-              }} />
-            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, rgba(31,42,68,0.4), transparent 60%)` }} />
-          </div>
-
-          {/* Card 2 — tengah */}
-          <div style={{
-            position: 'absolute', top: 0, left: 0,
-            width: '250px', height: '310px',
-            borderRadius: '120px 120px 120px 40px',
-            overflow: 'hidden',
-            border: `2px solid ${t.border2}`,
-            animation: 'card2anim 6s ease-in-out infinite',
-          }}>
-            <img src="/images/profile-casual.jpg" alt="casual"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              onError={e => {
-                e.target.style.display = 'none'
-                e.target.parentElement.style.background = `linear-gradient(135deg, ${t.bg2}, #c47a8a33)`
-              }} />
-            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, rgba(123,30,43,0.2), transparent 60%)` }} />
-          </div>
-
-          {/* Card 1 — depan */}
-          <div style={{
-            position: 'absolute', top: 0, left: 0,
+            position: 'relative',
             width: '260px', height: '320px',
-            borderRadius: '120px 120px 120px 40px',
-            overflow: 'hidden',
-            border: `2px solid ${t.border2}`,
-            animation: 'card1anim 6s ease-in-out infinite',
-            zIndex: 3,
-          }}>
-            <img src="/images/profile.jpg" alt="Abiyya Hamdan Nurwandha"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              onError={e => {
-                e.target.style.display = 'none'
-                e.target.parentElement.style.background = `linear-gradient(135deg, ${t.bg2}, ${t.navy})`
-                e.target.parentElement.innerHTML += `<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px"><div style="font-size:56px;font-weight:700;color:rgba(123,30,43,0.2);letter-spacing:-2px">AHN</div><div style="font-size:10px;letter-spacing:3px;color:rgba(123,30,43,0.2);text-transform:uppercase">Photo Soon</div></div>`
-              }} />
-            <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, rgba(123,30,43,0.15), transparent 60%)` }} />
-          </div>
-
-          {/* Label bawah */}
-          <div style={{
-            position: 'absolute', bottom: '0px', left: '0px',
-            zIndex: 10, width: '280px',
+            perspective: '1000px',
           }}>
             <div style={{
+              width: '100%', height: '100%',
+              position: 'relative',
+              transformStyle: 'preserve-3d',
+              animation: 'flipCard 5s ease-in-out infinite',
+            }}>
+              {/* Front */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                borderRadius: '120px 120px 120px 40px',
+                overflow: 'hidden',
+                border: `2px solid ${t.border2}`,
+                backfaceVisibility: 'hidden',
+              }}>
+                <img src="/images/profile.jpg" alt="formal"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+
+              {/* Back */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                borderRadius: '120px 120px 120px 40px',
+                overflow: 'hidden',
+                border: `2px solid ${t.border2}`,
+                backfaceVisibility: 'hidden',
+                transform: 'rotateY(180deg)',
+              }}>
+                <img src="/images/profile-casual.jpg" alt="casual"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+            </div>
+          </div>
+
+          {/* Label */}
+          <div style={{ position: 'absolute', bottom: '0px', left: '0px', zIndex: 10, width: '280px' }}>
+            <div style={{
               background: t.bg, border: `1px solid ${t.border2}`,
-              borderRadius: '12px', padding: '12px 18px',
+              borderRadius: '12px', padding: '14px 18px',
               marginBottom: '10px',
               boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
             }}>
-              <div style={{ fontSize: '13px', fontWeight: '600', color: t.text, marginBottom: '2px' }}>
-                Abiyya Hamdan Nurwandha
+              <div style={{
+                fontSize: '13px', fontWeight: '600',
+                color: t.accent, marginBottom: '4px',
+                fontStyle: 'italic',
+              }}>
+                "Code is poetry,<br/>build it with heart."
               </div>
               <div style={{ fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', color: t.textFaint }}>
-                Fullstack Web Developer
+                — Abiyya Hamdan Nurwandha
               </div>
             </div>
 
@@ -223,8 +206,8 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
           { n: `${data.skills.length}`, l: 'Skills' },
         ].map((s, i) => (
           <div key={i} style={{ textAlign: 'right' }}>
-            <div style={{ fontSize: '32px', fontWeight: '700', color: t.accent, lineHeight: 1, letterSpacing: '-1px' }}>{s.n}</div>
-            <div style={{ fontSize: '9px', letterSpacing: '2.5px', textTransform: 'uppercase', color: t.textFaint, marginTop: '6px' }}>{s.l}</div>
+            <div style={{ fontSize: '32px', fontWeight: '700', color: t.accent }}>{s.n}</div>
+            <div style={{ fontSize: '9px', letterSpacing: '2.5px', textTransform: 'uppercase', color: t.textFaint }}>{s.l}</div>
           </div>
         ))}
       </div>
@@ -232,24 +215,10 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
       <style>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-        @keyframes card1anim {
-          0%, 100% { transform: translate(30px, 30px) rotate(4deg); z-index: 3; }
-          25% { transform: translate(80px, 10px) rotate(10deg); z-index: 1; }
-          50% { transform: translate(80px, 10px) rotate(10deg); z-index: 1; }
-          75% { transform: translate(30px, 30px) rotate(4deg); z-index: 3; }
-        }
-        @keyframes card2anim {
-          0%, 100% { transform: translate(15px, 15px) rotate(1deg); z-index: 2; }
-          25% { transform: translate(15px, 15px) rotate(1deg); z-index: 2; }
-          50% { transform: translate(15px, 15px) rotate(1deg); z-index: 2; }
-          75% { transform: translate(15px, 15px) rotate(1deg); z-index: 2; }
-        }
-        @keyframes card3anim {
-          0%, 100% { transform: translate(0px, 0px) rotate(-2deg); z-index: 1; }
-          25% { transform: translate(0px, 0px) rotate(-2deg); z-index: 3; }
-          50% { transform: translate(0px, 0px) rotate(-2deg); z-index: 3; }
-          75% { transform: translate(0px, 0px) rotate(-2deg); z-index: 1; }
+        @keyframes flipCard {
+          0%, 40% { transform: rotateY(0deg); }
+          50%, 90% { transform: rotateY(180deg); }
+          100% { transform: rotateY(0deg); }
         }
 
         @media (max-width: 1024px) {
@@ -261,19 +230,12 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
         }
         @media (max-width: 768px) {
           .hero-section { padding: 40px 24px 60px !important; }
-          .hero-name { font-size: 52px !important; letter-spacing: -2px !important; }
+          .hero-name { font-size: 52px !important; }
           .hero-name-sub { font-size: 42px !important; }
-          .hero-desc { font-size: 14px !important; max-width: 100% !important; margin-bottom: 32px !important; }
-          .hero-buttons { flex-direction: column !important; gap: 10px !important; }
-          .hero-buttons button, .hero-buttons a { width: 100% !important; text-align: center !important; }
+          .hero-desc { font-size: 14px !important; }
+          .hero-buttons { flex-direction: column !important; }
           .hero-stats { display: none !important; }
           .hero-stats-mobile { display: flex !important; }
-          .hero-eyebrow { font-size: 9px !important; letter-spacing: 2px !important; }
-          .scroll-hint { display: none !important; }
-        }
-        @media (max-width: 380px) {
-          .hero-name { font-size: 40px !important; }
-          .hero-name-sub { font-size: 32px !important; }
         }
       `}</style>
     </section>
