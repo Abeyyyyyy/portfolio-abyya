@@ -114,7 +114,13 @@ function Home() {
 
       <Sidebar activeSection={activeSection} onNavigate={navigateTo} isDark={isDark} onToggleMode={() => setIsDark(!isDark)} />
 
-      <main style={{ marginLeft: '52px', position: 'relative', zIndex: 1 }} id="main-content">
+      <main style={{ 
+  marginLeft: '52px', 
+  position: 'relative', 
+  zIndex: 1,
+  maxWidth: '1400px',
+}} id="main-content">
+  
         <Hero ref={refs.hero} t={t} data={data} navigateTo={navigateTo} />
         <About ref={refs.about} t={t} />
         <Skills ref={refs.skills} t={t} data={data} activeSection={activeSection} />
