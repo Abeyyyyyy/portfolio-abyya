@@ -15,7 +15,7 @@ const About = forwardRef(({ t }, ref) => {
         position: 'relative',
       }}
     >
-      <div style={{ maxWidth: '1100px', width: '100%' }}>
+      <div style={{ maxWidth: '900px', width: '100%' }}>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <div style={{ width: '32px', height: '1px', background: t.accent }} />

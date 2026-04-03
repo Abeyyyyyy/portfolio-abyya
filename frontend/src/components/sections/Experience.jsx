@@ -13,7 +13,7 @@ const Experience = forwardRef(({ t, data }, ref) => {
         position: 'relative',
       }}
     >
-      <div style={{ width: '100%', maxWidth: '1000px' }}>
+      <div style={{ width: '100%', maxWidth: '900px' }}>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <div style={{ width: '32px', height: '1px', background: t.accent }} />
