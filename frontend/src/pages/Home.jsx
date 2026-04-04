@@ -56,7 +56,7 @@ function Home() {
     navy: '#1F2A44',
     navySoft: 'rgba(31,42,68,0.12)',
     cream: '#F2E8DF',
-    grid: isDark ? 'rgba(255,255,255,0.018)' : 'rgba(13,13,13,0.04)',
+    grid: isDark ? 'rgba(31,42,68,0.25)' : 'rgba(196,122,138,0.15)', // ✅ UPDATED
   }
 
   useEffect(() => {
@@ -110,17 +110,19 @@ function Home() {
         position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none',
         backgroundImage: `linear-gradient(${t.grid} 1px, transparent 1px), linear-gradient(90deg, ${t.grid} 1px, transparent 1px)`,
         backgroundSize: '48px 48px',
+        width: '100vw',
+        height: '100vh',
       }} />
 
       <Sidebar activeSection={activeSection} onNavigate={navigateTo} isDark={isDark} onToggleMode={() => setIsDark(!isDark)} />
 
-      <main style={{ 
-  marginLeft: '52px', 
-  position: 'relative', 
-  zIndex: 1,
-  maxWidth: '1400px',
-}} id="main-content">
-  
+      <main style={{
+        marginLeft: '52px',
+        position: 'relative',
+        zIndex: 1,
+        minHeight: '100vh',
+      }} id="main-content">
+
         <Hero ref={refs.hero} t={t} data={data} navigateTo={navigateTo} />
         <About ref={refs.about} t={t} />
         <Skills ref={refs.skills} t={t} data={data} activeSection={activeSection} />
