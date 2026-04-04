@@ -20,7 +20,7 @@ const Testimonials = forwardRef(({ t, data }, ref) => {
     }}>
 
       {/* Header */}
-      <div style={{ padding: '0 64px', width: '100%', maxWidth: '1100px', margin: '0 auto 56px' }}>
+      <div style={{ width: '100%', maxWidth: '1100px', margin: '0 auto 56px', padding: '0 64px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <div style={{ width: '32px', height: '1px', background: t.accent }} />
           <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>Testimonials</span>
