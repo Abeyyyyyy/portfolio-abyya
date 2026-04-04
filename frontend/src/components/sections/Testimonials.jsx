@@ -20,15 +20,18 @@ const Testimonials = forwardRef(({ t, data }, ref) => {
     }}>
 
       {/* Header */}
-      <div style={{ width: '100%', maxWidth: '1100px', margin: '0 auto 56px', padding: '0 64px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-          <div style={{ width: '32px', height: '1px', background: t.accent }} />
-          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>Testimonials</span>
-        </div>
-        <h2 style={{ fontSize: '48px', fontWeight: '700', letterSpacing: '-2px' }}>
-          What They <span style={{ color: t.accent }}>Say</span>
-        </h2>
-      </div>
+<div style={{ width: '100%', maxWidth: '1100px', margin: '0 0 56px', padding: '0 64px' }}>
+  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
+    <div style={{ width: '32px', height: '1px', background: t.accent }} />
+    <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>
+      Testimonials
+    </span>
+  </div>
+
+  <h2 style={{ fontSize: '48px', fontWeight: '700', letterSpacing: '-2px', marginBottom: '56px' }}>
+    What They <span style={{ color: t.accent }}>Say</span>
+  </h2>
+</div>
 
       {/* Marquee */}
       <div style={{ width: '100%', overflow: 'hidden', position: 'relative' }}>
