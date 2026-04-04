@@ -107,12 +107,14 @@ function Home() {
       <CustomCursor isDark={isDark} />
 
       <div style={{
-        position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none',
-        backgroundImage: `linear-gradient(${t.grid} 1px, transparent 1px), linear-gradient(90deg, ${t.grid} 1px, transparent 1px)`,
-        backgroundSize: '48px 48px',
-        width: '100vw',
-        height: '100vh',
-      }} />
+  position: 'fixed',
+  top: 0, left: 0,
+  width: '100vw',
+  height: '100vh',
+  zIndex: 0, pointerEvents: 'none',
+  backgroundImage: `linear-gradient(${t.grid} 1px, transparent 1px), linear-gradient(90deg, ${t.grid} 1px, transparent 1px)`,
+  backgroundSize: '48px 48px',
+}} />
 
       <Sidebar activeSection={activeSection} onNavigate={navigateTo} isDark={isDark} onToggleMode={() => setIsDark(!isDark)} />
 
