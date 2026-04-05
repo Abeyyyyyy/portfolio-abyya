@@ -9,10 +9,11 @@ const FunFacts = forwardRef(({ t }, ref) => {
   ]
 
   const learning = [
-    { tech: 'React.js', desc: 'Memperdalam hooks, state management, dan best practices.', progress: 70 },
-    { tech: 'React + Laravel', desc: 'Fullstack integration — REST API + SPA architecture.', progress: 65 },
-    { tech: 'CyberSecurity', desc: 'Belajar dasar-dasar keamanan web dan ethical hacking.', progress: 30 },
-  ]
+  { tech: 'React.js Advanced', desc: 'Memperdalam hooks, state management, dan best practices.', progress: 70 },
+  { tech: 'React + Laravel', desc: 'Fullstack integration — REST API + SPA architecture.', progress: 65 },
+  { tech: 'CyberSecurity', desc: 'Belajar dasar-dasar keamanan web dan ethical hacking.', progress: 35 },
+  { tech: 'AI-Assisted Development', desc: 'Memanfaatkan AI tools secara bijak untuk meningkatkan produktivitas development.', progress: 80 },
+]
 
   const facts = [
     { n: '2+', l: 'Projects Built' },
