@@ -38,4 +38,9 @@ class BlogController extends Controller
         Blog::findOrFail($id)->delete();
         return response()->json(['message' => 'Blog dihapus']);
     }
+
+    public function show($id)
+{
+    return response()->json(Blog::findOrFail($id));
+}
 }
