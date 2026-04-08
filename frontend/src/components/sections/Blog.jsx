@@ -1,31 +1,31 @@
 import { forwardRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Blog = forwardRef(({ t, data }, ref) => {
+const Blog = forwardRef(({ t, tr, data }, ref) => {
   const navigate = useNavigate()
 
   const placeholderPosts = [
     {
       id: null,
-      title: 'Pengalaman Pertama Belajar Laravel',
-      excerpt: 'Perjalanan belajar framework PHP yang powerful ini dari nol — apa yang susah, apa yang seru, dan tips untuk pemula.',
-      date: 'Coming Soon',
+      title: tr.blog_placeholder1_title,
+      excerpt: tr.blog_placeholder1_excerpt,
+      date: tr.blog_coming_soon,
       tag: 'Laravel',
       read_time: '5 min',
     },
     {
       id: null,
-      title: 'Membangun REST API dengan Laravel Sanctum',
-      excerpt: 'Cara membuat API yang aman menggunakan Laravel Sanctum untuk autentikasi token-based.',
-      date: 'Coming Soon',
+      title: tr.blog_placeholder2_title,
+      excerpt: tr.blog_placeholder2_excerpt,
+      date: tr.blog_coming_soon,
       tag: 'Laravel + React',
       read_time: '8 min',
     },
     {
       id: null,
-      title: 'Tips Belajar Coding untuk Siswa SMK',
-      excerpt: 'Pengalaman dan tips dari siswa RPL yang belajar coding sambil tetap produktif dan konsisten.',
-      date: 'Coming Soon',
+      title: tr.blog_placeholder3_title,
+      excerpt: tr.blog_placeholder3_excerpt,
+      date: tr.blog_coming_soon,
       tag: 'Tips',
       read_time: '4 min',
     },
@@ -49,15 +49,17 @@ const Blog = forwardRef(({ t, data }, ref) => {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <div style={{ width: '32px', height: '1px', background: t.accent }} />
-          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>Blog</span>
+          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>
+            {tr.blog_subtitle}
+          </span>
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '56px' }}>
           <h2 style={{ fontSize: '48px', fontWeight: '700', letterSpacing: '-2px' }}>
-            My <span style={{ color: t.accent }}>Writings</span>
+            {tr.blog_title_1} <span style={{ color: t.accent }}>{tr.blog_title_2}</span>
           </h2>
           <span style={{ fontSize: '11px', color: t.textFaint, letterSpacing: '1px' }}>
-            {data.blogs?.length > 0 ? `${data.blogs.length} artikel` : 'Coming soon'}
+            {data.blogs?.length > 0 ? `${data.blogs.length} ${tr.blog_count_label}` : tr.blog_coming_soon}
           </span>
         </div>
 
@@ -82,7 +84,6 @@ const Blog = forwardRef(({ t, data }, ref) => {
                 e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
-              {/* Top accent line */}
               <div style={{
                 position: 'absolute', top: 0, left: 0, right: 0,
                 height: '2px',
@@ -90,7 +91,6 @@ const Blog = forwardRef(({ t, data }, ref) => {
                 opacity: 0.5,
               }} />
 
-              {/* Tag + Read time */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
                 <span style={{
                   fontSize: '9px', letterSpacing: '1.5px', textTransform: 'uppercase',
@@ -105,7 +105,6 @@ const Blog = forwardRef(({ t, data }, ref) => {
                 </span>
               </div>
 
-              {/* Title */}
               <h3 style={{
                 fontSize: '15px', fontWeight: '600',
                 color: t.text, lineHeight: 1.5,
@@ -114,7 +113,6 @@ const Blog = forwardRef(({ t, data }, ref) => {
                 {post.title}
               </h3>
 
-              {/* Excerpt */}
               <p style={{
                 fontSize: '12px', color: t.textFaint,
                 lineHeight: 1.8, marginBottom: '20px',
@@ -122,7 +120,6 @@ const Blog = forwardRef(({ t, data }, ref) => {
                 {post.excerpt}
               </p>
 
-              {/* Footer */}
               <div style={{
                 display: 'flex', justifyContent: 'space-between',
                 alignItems: 'center', paddingTop: '16px',
@@ -139,7 +136,7 @@ const Blog = forwardRef(({ t, data }, ref) => {
                   color: post.id ? t.accent : t.textFaint,
                   opacity: post.id ? 1 : 0.5,
                 }}>
-                  {post.id ? 'Read More →' : 'Coming Soon'}
+                  {post.id ? `${tr.blog_read_more} →` : tr.blog_coming_soon}
                 </span>
               </div>
             </div>
@@ -148,12 +145,8 @@ const Blog = forwardRef(({ t, data }, ref) => {
       </div>
 
       <style>{`
-        @media (max-width: 1024px) {
-          .blog-grid { grid-template-columns: 1fr 1fr !important; }
-        }
-        @media (max-width: 768px) {
-          .blog-grid { grid-template-columns: 1fr !important; }
-        }
+        @media (max-width: 1024px) { .blog-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 768px) { .blog-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </section>
   )

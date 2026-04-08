@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useLang } from '../context/LanguageContext'
 
 function Sidebar({ activeSection, onNavigate, isDark, onToggleMode }) {
   const [open, setOpen] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { lang, setLang, tr } = useLang()
 
   const t = {
     bg: isDark ? '#111827' : '#EDE0D8',
@@ -15,18 +17,18 @@ function Sidebar({ activeSection, onNavigate, isDark, onToggleMode }) {
   }
 
   const menus = [
-    { id: 'hero', label: 'Home' },
-    { id: 'about', label: 'About' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'education', label: 'Education' },
-    { id: 'certificates', label: 'Certificates' },
-    { id: 'testimonials', label: 'Testimonials' },
-    { id: 'funfacts', label: 'Fun Facts' },
-    { id: 'blog', label: 'Blog' },
-    { id: 'contact', label: 'Contact' },
-  ]
+  { id: 'hero', label: tr.home },
+  { id: 'about', label: tr.about },
+  { id: 'skills', label: tr.skills },
+  { id: 'projects', label: tr.projects },
+  { id: 'experience', label: tr.experience },
+  { id: 'education', label: tr.education },
+  { id: 'certificates', label: tr.certificates },
+  { id: 'testimonials', label: tr.testimonials },
+  { id: 'funfacts', label: tr.funfacts },
+  { id: 'blog', label: tr.blog },
+  { id: 'contact', label: tr.contact },
+]
 
   const handleNav = (id) => {
     onNavigate(id)
@@ -70,6 +72,22 @@ function Sidebar({ activeSection, onNavigate, isDark, onToggleMode }) {
           padding: '12px 0',
           flexDirection: 'column',
         }} id="mobile-menu">
+          {/* Mobile Language Switcher */}
+          <div style={{ padding: '8px 24px', borderBottom: `0.5px solid ${t.border}`, display: 'flex', gap: '8px' }}>
+            {['id', 'en', 'zh'].map(l => (
+              <button key={l} onClick={() => setLang(l)}
+                style={{
+                  background: lang === l ? t.accentSoft : 'transparent',
+                  border: `0.5px solid ${lang === l ? t.accent : t.border}`,
+                  borderRadius: '6px', padding: '4px 10px',
+                  fontSize: '11px', color: lang === l ? t.accent : t.muted,
+                  cursor: 'pointer', fontWeight: lang === l ? '600' : '400'
+                }}>
+                {l === 'id' ? '🇮🇩 ID' : l === 'en' ? '🇬🇧 EN' : '🇨🇳 ZH'}
+              </button>
+            ))}
+          </div>
+
           {menus.map(menu => (
             <button key={menu.id} onClick={() => handleNav(menu.id)}
               style={{
@@ -113,7 +131,25 @@ function Sidebar({ activeSection, onNavigate, isDark, onToggleMode }) {
           {open ? 'ABIYYA · HN' : 'AHN'}
         </div>
 
-        <div style={{ height: '0.5px', background: t.border, margin: '0 12px 12px' }} />
+        {/* Updated: Language Selector */}
+        <div style={{ padding: '8px', borderBottom: `0.5px solid ${t.border}`, borderTop: `0.5px solid ${t.border}`, marginBottom: '12px' }}>
+          <div style={{ display: 'flex', gap: '4px', justifyContent: open ? 'flex-start' : 'center', flexWrap: 'wrap' }}>
+            {['id', 'en', 'zh'].map(l => (
+              <button key={l} onClick={() => setLang(l)}
+                style={{
+                  background: lang === l ? t.accentSoft : 'transparent',
+                  border: `0.5px solid ${lang === l ? t.accent : t.border}`,
+                  borderRadius: '6px', padding: '4px 8px',
+                  fontSize: '10px', color: lang === l ? t.accent : t.muted,
+                  cursor: 'pointer', fontWeight: lang === l ? '600' : '400',
+                  transition: 'all 0.2s',
+                }}>
+                {l === 'id' ? '🇮🇩' : l === 'en' ? '🇬🇧' : '🇨🇳'}
+                {open && <span style={{ marginLeft: '4px' }}>{l.toUpperCase()}</span>}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '1px', padding: '0 8px', flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
           {menus.map(menu => (

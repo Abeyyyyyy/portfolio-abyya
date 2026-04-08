@@ -1,6 +1,9 @@
 import { forwardRef } from 'react'
+import { useLang } from '../../context/LanguageContext'
 
 const About = forwardRef(({ t }, ref) => {
+  const { tr } = useLang()
+
   return (
     <section
       id="about"
@@ -19,11 +22,11 @@ const About = forwardRef(({ t }, ref) => {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <div style={{ width: '32px', height: '1px', background: t.accent }} />
-          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>About Me</span>
+          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>{tr.aboutMe}</span>
         </div>
 
         <h2 style={{ fontSize: '48px', fontWeight: '700', letterSpacing: '-2px', lineHeight: 1.1, marginBottom: '48px' }}>
-          Passion di bidang<br />
+          {tr.aboutTitle}<br />
           <span style={{ color: t.accent }}>Web Development</span>
         </h2>
 
@@ -32,14 +35,10 @@ const About = forwardRef(({ t }, ref) => {
           {/* Left */}
           <div>
             <p style={{ fontSize: '15px', color: t.textMuted, lineHeight: 2.0, marginBottom: '32px' }}>
-              Siswa kelas XI RPL di SMKN 4 Bandung dengan minat kuat di bidang
-              Fullstack Web Development. Berpengalaman membangun sistem berbasis
-              CRUD, mengelola database MySQL, dan berkolaborasi dalam tim maupun mandiri.
+              {tr.aboutDesc1}
             </p>
             <p style={{ fontSize: '15px', color: t.textFaint, lineHeight: 2.0, marginBottom: '40px' }}>
-              Aktif di komunitas teknologi ORBIT dan terus berkembang lewat
-              proyek nyata. Memiliki latar belakang pendidikan keagamaan dari
-              Pondok Pesantren Al-Ihsan yang membentuk karakter disiplin dan integritas.
+              {tr.aboutDesc2}
             </p>
 
             {/* Languages */}
@@ -62,12 +61,12 @@ const About = forwardRef(({ t }, ref) => {
           {/* Right */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {[
-              { k: 'Nama', v: 'Abiyya Hamdan Nurwandha' },
-              { k: 'Lokasi', v: 'Bandung, Indonesia' },
-              { k: 'Email', v: 'hamdanabiyya@gmail.com' },
-              { k: 'Sekolah', v: 'SMKN 4 Bandung' },
-              { k: 'Jurusan', v: 'Rekayasa Perangkat Lunak' },
-              { k: 'Status', v: 'Fresh Graduate · Tersedia PKL' },
+              { k: tr.labelName, v: 'Abiyya Hamdan Nurwandha' },
+              { k: tr.labelLocation, v: 'Bandung, Indonesia' },
+              { k: tr.labelEmail, v: 'hamdanabiyya@gmail.com' },
+              { k: tr.labelSchool, v: 'SMKN 4 Bandung' },
+              { k: tr.labelMajor, v: 'Rekayasa Perangkat Lunak' },
+              { k: tr.labelStatus, v: tr.statusValue },
             ].map((item, i) => (
               <div key={i} style={{
                 display: 'flex', alignItems: 'center',
@@ -89,14 +88,12 @@ const About = forwardRef(({ t }, ref) => {
         </div>
       </div>
 
-            <style>{`
-      @media (max-width: 768px) {
-    .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-    .about-grid h2 { font-size: 32px !important; }
-  }
-`}</style>
-
-
+      <style>{`
+        @media (max-width: 768px) {
+          .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .about-grid h2 { font-size: 32px !important; }
+        }
+      `}</style>
     </section>
   )
 })

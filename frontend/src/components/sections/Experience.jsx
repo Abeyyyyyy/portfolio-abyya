@@ -1,6 +1,9 @@
 import { forwardRef } from 'react'
+import { useLang } from '../../context/LanguageContext'
 
 const Experience = forwardRef(({ t, data }, ref) => {
+  const { tr } = useLang()
+
   return (
     <section
       id="experience"
@@ -17,7 +20,7 @@ const Experience = forwardRef(({ t, data }, ref) => {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <div style={{ width: '32px', height: '1px', background: t.accent }} />
-          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>Experience</span>
+          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>{tr.experience}</span>
         </div>
 
         <h2 style={{ fontSize: '48px', fontWeight: '700', letterSpacing: '-2px', marginBottom: '64px' }}>
@@ -29,15 +32,15 @@ const Experience = forwardRef(({ t, data }, ref) => {
           {/* Work */}
           <div>
             <div style={{ fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', color: t.textFaint, marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              Work
+              {tr.work}
               <span style={{ flex: 1, height: '0.5px', background: t.border }} />
             </div>
             <div style={{ position: 'relative', paddingLeft: '20px' }}>
               <div style={{ position: 'absolute', left: '4px', top: 0, bottom: 0, width: '0.5px', background: t.border2 }} />
               {data.experiences.filter(e => e.type === 'work').length === 0 ? (
-                <p style={{ color: t.textFaint, fontSize: '13px' }}>Belum ada work experience.</p>
+                <p style={{ color: t.textFaint, fontSize: '13px' }}>{tr.noExperience}</p>
               ) : data.experiences.filter(e => e.type === 'work').map(exp => (
-                <ExperienceCard key={exp.id} exp={exp} t={t} />
+                <ExperienceCard key={exp.id} exp={exp} t={t} tr={tr} />
               ))}
             </div>
           </div>
@@ -45,15 +48,15 @@ const Experience = forwardRef(({ t, data }, ref) => {
           {/* Organization */}
           <div>
             <div style={{ fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', color: t.textFaint, marginBottom: '28px', display: 'flex', alignItems: 'center', gap: '10px' }}>
-              Organization
+              {tr.organization}
               <span style={{ flex: 1, height: '0.5px', background: t.border }} />
             </div>
             <div style={{ position: 'relative', paddingLeft: '20px' }}>
               <div style={{ position: 'absolute', left: '4px', top: 0, bottom: 0, width: '0.5px', background: t.border2 }} />
               {data.experiences.filter(e => e.type === 'organization').length === 0 ? (
-                <p style={{ color: t.textFaint, fontSize: '13px' }}>Belum ada organisasi.</p>
+                <p style={{ color: t.textFaint, fontSize: '13px' }}>{tr.noOrg}</p>
               ) : data.experiences.filter(e => e.type === 'organization').map(exp => (
-                <ExperienceCard key={exp.id} exp={exp} t={t} />
+                <ExperienceCard key={exp.id} exp={exp} t={t} tr={tr} />
               ))}
             </div>
           </div>
@@ -61,15 +64,15 @@ const Experience = forwardRef(({ t, data }, ref) => {
       </div>
 
       <style>{`
-  @media (max-width: 768px) {
-    .exp-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
-  }
-`}</style>
+        @media (max-width: 768px) {
+          .exp-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+        }
+      `}</style>
     </section>
   )
 })
 
-function ExperienceCard({ exp, t }) {
+function ExperienceCard({ exp, t, tr }) {
   const statusColor = {
     active: '#4ade80',
     upcoming: t.pink,
@@ -101,11 +104,11 @@ function ExperienceCard({ exp, t }) {
             border: `0.5px solid ${statusColor[exp.status]}`,
             background: `${statusColor[exp.status]}15`,
             letterSpacing: '1px', textTransform: 'uppercase',
-          }}>{exp.status}</span>
+          }}>{tr[exp.status] || exp.status}</span>
         </div>
         <div style={{ fontSize: '12px', color: t.accent, marginBottom: '6px', fontWeight: '500' }}>{exp.role}</div>
         <div style={{ fontSize: '10px', color: t.textFaint, marginBottom: exp.description ? '10px' : '0', letterSpacing: '0.5px' }}>
-          {exp.start_date}{exp.end_date ? ` — ${exp.end_date}` : ' — Sekarang'}
+          {exp.start_date}{exp.end_date ? ` — ${exp.end_date}` : ` — ${tr.now}`}
         </div>
         {exp.description && (
           <p style={{ fontSize: '12px', color: t.textFaint, lineHeight: 1.8, marginBottom: exp.tags?.length ? '10px' : '0' }}>

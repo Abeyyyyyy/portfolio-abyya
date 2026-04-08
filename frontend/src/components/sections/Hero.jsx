@@ -1,6 +1,8 @@
 import { useState, useEffect, forwardRef } from 'react'
+import { useLang } from '../../context/LanguageContext'
 
 const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
+  const { tr } = useLang()
   const [typed, setTyped] = useState('')
 
   useEffect(() => {
@@ -74,7 +76,7 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
             <div style={{ width: '32px', height: '1px', background: t.accent, flexShrink: 0 }} />
             <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.textFaint }} className="hero-eyebrow">
-              Fresh Graduate · RPL · SMKN 4 Bandung
+              {tr.eyebrow}
             </span>
           </div>
 
@@ -93,9 +95,7 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
 
           {/* Description */}
           <p style={{ fontSize: '15px', color: t.textFaint, lineHeight: 1.9, maxWidth: '460px', marginBottom: '48px' }} className="hero-desc">
-            Membangun solusi digital yang bersih dan terstruktur
-            menggunakan Laravel dan React.js. Aktif di komunitas
-            ORBIT dan terus berkembang lewat proyek nyata.
+            {tr.heroDesc}
           </p>
 
           {/* Buttons */}
@@ -105,14 +105,14 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
               style={{ background: t.accent, color: '#F2E8DF', border: 'none', borderRadius: '8px', padding: '15px 36px', fontSize: '11px', fontWeight: '600', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: '0 8px 24px rgba(123,30,43,0.25)' }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(123,30,43,0.35)' }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(123,30,43,0.25)' }}>
-              View Work
+              {tr.viewWork}
             </button>
 
             <a href="/cv-abiyya.pdf" download
               style={{ background: t.navySoft, color: t.navy, border: `1px solid ${t.navy}`, borderRadius: '8px', padding: '15px 36px', fontSize: '11px', fontWeight: '600', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'all 0.2s', textDecoration: 'none', display: 'inline-block' }}
               onMouseEnter={e => { e.currentTarget.style.background = t.navy; e.currentTarget.style.color = '#F2E8DF'; e.currentTarget.style.transform = 'translateY(-3px)' }}
               onMouseLeave={e => { e.currentTarget.style.background = t.navySoft; e.currentTarget.style.color = t.navy; e.currentTarget.style.transform = 'translateY(0)' }}>
-              Download CV
+              {tr.downloadCV}
             </a>
 
             <button
@@ -120,7 +120,7 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
               style={{ background: 'transparent', color: t.textMuted, border: `1px solid ${t.border2}`, borderRadius: '8px', padding: '15px 36px', fontSize: '11px', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'all 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = t.accent; e.currentTarget.style.color = t.accent; e.currentTarget.style.transform = 'translateY(-3px)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = t.border2; e.currentTarget.style.color = t.textMuted; e.currentTarget.style.transform = 'translateY(0)' }}>
-              Contact Me
+              {tr.contactMe}
             </button>
           </div>
 
@@ -185,7 +185,7 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
               boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
             }}>
               <div style={{ fontSize: '13px', fontWeight: '600', color: t.accent, fontStyle: 'italic', lineHeight: 1.6 }}>
-                "Code is poetry,<br />build it with heart."
+                {tr.quote}
               </div>
               <div style={{ fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', color: t.textFaint, marginTop: '6px' }}>
                 — Abiyya Hamdan Nurwandha
@@ -200,7 +200,7 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
               boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
             }}>
               <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#4ade80', animation: 'pulse 2s ease-in-out infinite' }} />
-              <span style={{ fontSize: '10px', color: t.textMuted, letterSpacing: '0.5px' }}>Available for PKL</span>
+              <span style={{ fontSize: '10px', color: t.textMuted, letterSpacing: '0.5px' }}>{tr.available}</span>
             </div>
           </div>
 

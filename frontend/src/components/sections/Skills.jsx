@@ -1,6 +1,9 @@
 import { forwardRef } from 'react'
+import { useLang } from '../../context/LanguageContext'
 
 const Skills = forwardRef(({ t, data, activeSection }, ref) => {
+  const { tr } = useLang()
+  
   const categories = [
     { key: 'frontend', label: 'Frontend' },
     { key: 'backend', label: 'Backend' },
@@ -25,7 +28,7 @@ const Skills = forwardRef(({ t, data, activeSection }, ref) => {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <div style={{ width: '32px', height: '1px', background: t.accent }} />
-          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>Skills</span>
+          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>{tr.skills}</span>
         </div>
 
         <h2 style={{ fontSize: '48px', fontWeight: '700', letterSpacing: '-2px', marginBottom: '64px' }}>
@@ -96,13 +99,13 @@ const Skills = forwardRef(({ t, data, activeSection }, ref) => {
       </div>
 
       <style>{`
-  @media (max-width: 1024px) {
-    .skills-grid { grid-template-columns: 1fr 1fr !important; }
-  }
-  @media (max-width: 768px) {
-    .skills-grid { grid-template-columns: 1fr !important; }
-  }
-`}</style>
+        @media (max-width: 1024px) {
+          .skills-grid { grid-template-columns: 1fr 1fr !important; }
+        }
+        @media (max-width: 768px) {
+          .skills-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   )
 })

@@ -9,6 +9,13 @@ function BlogDetail() {
   const [loading, setLoading] = useState(true)
   const [isDark, setIsDark] = useState(false)
 
+  const handleBack = () => {
+    navigate('/')
+    setTimeout(() => {
+      document.getElementById('blog')?.scrollIntoView({ behavior: 'smooth' })
+    }, 800)
+  }
+
   const t = {
     bg: isDark ? '#0D0D0D' : '#F2E8DF',
     bg2: isDark ? '#111827' : '#EDE0D8',
@@ -46,10 +53,7 @@ function BlogDetail() {
 
       {/* Topbar */}
       <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: t.bg, borderBottom: `0.5px solid ${t.border}`, padding: '16px 64px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <button onClick={() => navigate('/')}
-          style={{ background: 'transparent', border: `0.5px solid ${t.border2}`, borderRadius: '8px', padding: '8px 20px', fontSize: '11px', letterSpacing: '1.5px', textTransform: 'uppercase', color: t.textMuted, cursor: 'pointer', transition: 'all 0.2s' }}
-          onMouseEnter={e => { e.currentTarget.style.borderColor = t.accent; e.currentTarget.style.color = t.accent }}
-          onMouseLeave={e => { e.currentTarget.style.borderColor = t.border2; e.currentTarget.style.color = t.textMuted }}>
+        <button onClick={handleBack} style={{ background: 'transparent', border: 'none', color: t.textMuted, cursor: 'pointer', fontSize: '14px', padding: 0 }}>
           Back to Portfolio
         </button>
 
@@ -108,7 +112,7 @@ function BlogDetail() {
         {/* Footer */}
         <div style={{ marginTop: '64px', paddingTop: '32px', borderTop: `0.5px solid ${t.border}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div style={{ fontSize: '13px', color: t.textFaint }}>Ditulis oleh <span style={{ color: t.accent, fontWeight: '600' }}>Abiyya Hamdan Nurwandha</span></div>
-          <button onClick={() => navigate('/')}
+          <button onClick={handleBack}
             style={{ background: t.accent, color: '#F2E8DF', border: 'none', borderRadius: '8px', padding: '10px 24px', fontSize: '11px', fontWeight: '600', letterSpacing: '1.5px', textTransform: 'uppercase', cursor: 'pointer' }}>
             Back
           </button>

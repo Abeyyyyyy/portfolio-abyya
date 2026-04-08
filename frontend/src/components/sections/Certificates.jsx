@@ -1,6 +1,6 @@
 import { forwardRef } from 'react'
 
-const Certificates = forwardRef(({ t, data }, ref) => {
+const Certificates = forwardRef(({ t, tr, data }, ref) => {
   return (
     <section id="certificates" ref={ref} style={{
       minHeight: '100vh', padding: '100px 64px',
@@ -11,16 +11,18 @@ const Certificates = forwardRef(({ t, data }, ref) => {
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <div style={{ width: '32px', height: '1px', background: t.accent }} />
-          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>Certificates</span>
+          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>
+            {tr.cert_subtitle}
+          </span>
         </div>
 
         <h2 style={{ fontSize: '48px', fontWeight: '700', letterSpacing: '-2px', marginBottom: '56px' }}>
-          My <span style={{ color: t.accent }}>Credentials</span>
+          {tr.cert_title_1} <span style={{ color: t.accent }}>{tr.cert_title_2}</span>
         </h2>
 
         {data.certificates.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '80px 0', color: t.textFaint, fontSize: '14px' }}>
-            Belum ada sertifikat. Tambahkan di admin panel!
+            {tr.cert_empty}
           </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '18px' }} className="cert-grid">
@@ -43,7 +45,7 @@ const Certificates = forwardRef(({ t, data }, ref) => {
                 {cert.credential_url && (
                   <a href={cert.credential_url} target="_blank" rel="noreferrer"
                     style={{ fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', color: t.navy, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: '500' }}>
-                    View Credential
+                    {tr.cert_view_link}
                   </a>
                 )}
               </div>
@@ -53,13 +55,9 @@ const Certificates = forwardRef(({ t, data }, ref) => {
       </div>
 
       <style>{`
-  @media (max-width: 1024px) {
-    .cert-grid { grid-template-columns: 1fr 1fr !important; }
-  }
-  @media (max-width: 768px) {
-    .cert-grid { grid-template-columns: 1fr !important; }
-  }
-`}</style>
+        @media (max-width: 1024px) { .cert-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 768px) { .cert-grid { grid-template-columns: 1fr !important; } }
+      `}</style>
     </section>
   )
 })
