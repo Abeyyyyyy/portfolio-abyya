@@ -1,14 +1,16 @@
 import { useState, useEffect, forwardRef } from 'react'
+import { useLang } from '../../context/LanguageContext'
 
 const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
+  const { tr } = useLang()
   const [typed, setTyped] = useState('')
 
   useEffect(() => {
     const phrases = [
-      'Fullstack Web Developer',
+      tr.viewWork === 'View Work' ? 'Fullstack Web Developer' : tr.viewWork === '查看作品' ? '全栈网页开发者' : 'Fullstack Web Developer',
       'React.js Enthusiast',
       'Laravel Developer',
-      'Fresh Graduate RPL',
+      tr.viewWork === '查看作品' ? '应届毕业生' : 'Fresh Graduate RPL',
     ]
     let pi = 0, ci = 0, del = false
     const id = setInterval(() => {
@@ -22,51 +24,26 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
       }
     }, 80)
     return () => clearInterval(id)
-  }, [])
+  }, [tr])
 
   return (
     <section id="hero" ref={ref} style={{
-      minHeight: '100vh',
-      padding: '0 64px',
-      display: 'flex',
-      alignItems: 'center',
-      position: 'relative',
-      overflow: 'hidden',
+      minHeight: '100vh', padding: '0 64px',
+      display: 'flex', alignItems: 'center',
+      position: 'relative', overflow: 'hidden',
     }} className="hero-section">
 
-      {/* Background blobs */}
       <div style={{ position: 'absolute', top: '5%', right: '5%', width: '480px', height: '480px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(123,30,43,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', bottom: '10%', right: '20%', width: '300px', height: '300px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(31,42,68,0.08) 0%, transparent 70%)', pointerEvents: 'none' }} />
 
-      {/* MAIN GRID */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: '1fr auto',
-        gap: '80px',
-        alignItems: 'center',
-        width: '100%',
-        maxWidth: '1100px',
-      }} className="hero-grid">
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: '80px', alignItems: 'center', width: '100%', maxWidth: '1100px' }} className="hero-grid">
 
-        {/* ── LEFT ── */}
         <div>
-
           {/* Photo mobile */}
           <div style={{ display: 'none' }} className="hero-photo-mobile">
-            <div style={{
-              width: '100px', height: '100px',
-              borderRadius: '50%', overflow: 'hidden',
-              border: `2px solid ${t.border2}`,
-              margin: '0 0 24px 0',
-            }}>
-              <img src="/images/profile.jpg" alt="Abiyya"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                onError={e => {
-                  e.target.style.display = 'none'
-                  e.target.parentElement.style.background = `linear-gradient(135deg, ${t.bg2}, ${t.navy})`
-                  e.target.parentElement.innerHTML += `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:rgba(123,30,43,0.4)">AHN</div>`
-                }}
-              />
+            <div style={{ width: '100px', height: '100px', borderRadius: '50%', overflow: 'hidden', border: `2px solid ${t.border2}`, margin: '0 0 24px 0' }}>
+              <img src="/images/profile.jpg" alt="Abiyya" style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={e => { e.target.style.display = 'none'; e.target.parentElement.style.background = `linear-gradient(135deg, ${t.bg2}, ${t.navy})`; e.target.parentElement.innerHTML += `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:rgba(123,30,43,0.4)">AHN</div>` }} />
             </div>
           </div>
 
@@ -74,7 +51,7 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
             <div style={{ width: '32px', height: '1px', background: t.accent, flexShrink: 0 }} />
             <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.textFaint }} className="hero-eyebrow">
-              Fresh Graduate · RPL · SMKN 4 Bandung
+              {tr.eyebrow}
             </span>
           </div>
 
@@ -91,36 +68,32 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
             <span style={{ display: 'inline-block', width: '2px', height: '20px', background: t.accent, animation: 'blink 1s step-end infinite' }} />
           </div>
 
-          {/* Description */}
+          {/* Desc */}
           <p style={{ fontSize: '15px', color: t.textFaint, lineHeight: 1.9, maxWidth: '460px', marginBottom: '48px' }} className="hero-desc">
-            Membangun solusi digital yang bersih dan terstruktur
-            menggunakan Laravel dan React.js. Aktif di komunitas
-            ORBIT dan terus berkembang lewat proyek nyata.
+            {tr.heroDesc}
           </p>
 
           {/* Buttons */}
           <div style={{ display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap' }} className="hero-buttons">
-            <button
-              onClick={() => navigateTo('projects')}
+            <button onClick={() => navigateTo('projects')}
               style={{ background: t.accent, color: '#F2E8DF', border: 'none', borderRadius: '8px', padding: '15px 36px', fontSize: '11px', fontWeight: '600', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: '0 8px 24px rgba(123,30,43,0.25)' }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 12px 32px rgba(123,30,43,0.35)' }}
               onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(123,30,43,0.25)' }}>
-              View Work
+              {tr.viewWork}
             </button>
 
             <a href="/cv-abiyya.pdf" download
               style={{ background: t.navySoft, color: t.navy, border: `1px solid ${t.navy}`, borderRadius: '8px', padding: '15px 36px', fontSize: '11px', fontWeight: '600', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'all 0.2s', textDecoration: 'none', display: 'inline-block' }}
               onMouseEnter={e => { e.currentTarget.style.background = t.navy; e.currentTarget.style.color = '#F2E8DF'; e.currentTarget.style.transform = 'translateY(-3px)' }}
               onMouseLeave={e => { e.currentTarget.style.background = t.navySoft; e.currentTarget.style.color = t.navy; e.currentTarget.style.transform = 'translateY(0)' }}>
-              Download CV
+              {tr.downloadCV}
             </a>
 
-            <button
-              onClick={() => navigateTo('contact')}
+            <button onClick={() => navigateTo('contact')}
               style={{ background: 'transparent', color: t.textMuted, border: `1px solid ${t.border2}`, borderRadius: '8px', padding: '15px 36px', fontSize: '11px', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'all 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = t.accent; e.currentTarget.style.color = t.accent; e.currentTarget.style.transform = 'translateY(-3px)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = t.border2; e.currentTarget.style.color = t.textMuted; e.currentTarget.style.transform = 'translateY(0)' }}>
-              Contact Me
+              {tr.contactMe}
             </button>
           </div>
 
@@ -139,82 +112,43 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
           </div>
         </div>
 
-        {/* ── RIGHT — Slide Photos ── */}
+        {/* RIGHT — Slide Photos */}
         <div style={{ position: 'relative', flexShrink: 0, width: '300px', height: '420px' }} className="hero-photo">
-
-          {/* Photo frame */}
-          <div style={{
-            position: 'relative',
-            width: '260px', height: '320px',
-            overflow: 'hidden',
-            borderRadius: '120px 120px 120px 40px',
-            border: `2px solid ${t.border2}`,
-          }}>
-            {/* Photo 1 — formal */}
+          <div style={{ position: 'relative', width: '260px', height: '320px', overflow: 'hidden', borderRadius: '120px 120px 120px 40px', border: `2px solid ${t.border2}` }}>
             <div style={{ position: 'absolute', inset: 0, animation: 'slidePhoto1 6s ease-in-out infinite' }}>
-              <img src="/images/profile.jpg" alt="Abiyya formal"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                onError={e => {
-                  e.target.style.display = 'none'
-                  e.target.parentElement.style.background = `linear-gradient(135deg, ${t.bg2}, ${t.navy})`
-                  e.target.parentElement.innerHTML += `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:rgba(123,30,43,0.2)">AHN</div>`
-                }} />
+              <img src="/images/profile.jpg" alt="Abiyya formal" style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={e => { e.target.style.display = 'none'; e.target.parentElement.style.background = `linear-gradient(135deg, ${t.bg2}, ${t.navy})`; e.target.parentElement.innerHTML += `<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:48px;font-weight:700;color:rgba(123,30,43,0.2)">AHN</div>` }} />
               <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, rgba(123,30,43,0.15), transparent 60%)` }} />
             </div>
-
-            {/* Photo 2 — casual */}
             <div style={{ position: 'absolute', inset: 0, animation: 'slidePhoto2 6s ease-in-out infinite' }}>
-              <img src="/images/profile-casual.jpg" alt="Abiyya casual"
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                onError={e => {
-                  e.target.style.display = 'none'
-                  e.target.parentElement.style.background = `linear-gradient(135deg, ${t.navy}, #2d3f6b)`
-                }} />
+              <img src="/images/profile-casual.jpg" alt="Abiyya casual" style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={e => { e.target.style.display = 'none'; e.target.parentElement.style.background = `linear-gradient(135deg, ${t.navy}, #2d3f6b)` }} />
               <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, rgba(31,42,68,0.3), transparent 60%)` }} />
             </div>
           </div>
 
-          {/* Label bawah */}
           <div style={{ position: 'absolute', bottom: '0px', left: '0px', zIndex: 10, width: '280px' }}>
-            <div style={{
-              background: t.bg,
-              border: `1px solid ${t.border2}`,
-              borderRadius: '12px',
-              padding: '14px 18px',
-              marginBottom: '10px',
-              boxShadow: '0 8px 24px rgba(0,0,0,0.08)',
-            }}>
+            <div style={{ background: t.bg, border: `1px solid ${t.border2}`, borderRadius: '12px', padding: '14px 18px', marginBottom: '10px', boxShadow: '0 8px 24px rgba(0,0,0,0.08)' }}>
               <div style={{ fontSize: '13px', fontWeight: '600', color: t.accent, fontStyle: 'italic', lineHeight: 1.6 }}>
-                "Code is poetry,<br />build it with heart."
+                {tr.quote}
               </div>
               <div style={{ fontSize: '10px', letterSpacing: '1.5px', textTransform: 'uppercase', color: t.textFaint, marginTop: '6px' }}>
                 — Abiyya Hamdan Nurwandha
               </div>
             </div>
-
-            {/* Status badge */}
-            <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: '6px',
-              background: t.bg, border: `1px solid ${t.border2}`,
-              borderRadius: '40px', padding: '6px 14px',
-              boxShadow: '0 4px 12px rgba(0,0,0,0.06)',
-            }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', background: t.bg, border: `1px solid ${t.border2}`, borderRadius: '40px', padding: '6px 14px', boxShadow: '0 4px 12px rgba(0,0,0,0.06)' }}>
               <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#4ade80', animation: 'pulse 2s ease-in-out infinite' }} />
-              <span style={{ fontSize: '10px', color: t.textMuted, letterSpacing: '0.5px' }}>Available for PKL</span>
+              <span style={{ fontSize: '10px', color: t.textMuted, letterSpacing: '0.5px' }}>{tr.available}</span>
             </div>
           </div>
 
-          {/* Decorations */}
           <div style={{ position: 'absolute', bottom: '80px', left: '-16px', width: '56px', height: '56px', borderRadius: '14px', background: t.accent, opacity: 0.1 }} />
           <div style={{ position: 'absolute', top: '-12px', right: '0px', width: '36px', height: '36px', borderRadius: '10px', background: t.navy, opacity: 0.15 }} />
         </div>
       </div>
 
       {/* Stats desktop */}
-      <div style={{
-        position: 'absolute', bottom: '48px', right: '64px',
-        display: 'flex', gap: '48px',
-      }} className="hero-stats">
+      <div style={{ position: 'absolute', bottom: '48px', right: '64px', display: 'flex', gap: '48px' }} className="hero-stats">
         {[
           { n: `${data.projects.length}+`, l: 'Projects' },
           { n: '3', l: 'Languages' },
@@ -230,18 +164,8 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
       <style>{`
         @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
         @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-
-        @keyframes slidePhoto1 {
-          0%, 35%  { opacity: 1; transform: translateX(0) scale(1); }
-          45%, 90% { opacity: 0; transform: translateX(-40px) scale(0.95); }
-          100%     { opacity: 1; transform: translateX(0) scale(1); }
-        }
-        @keyframes slidePhoto2 {
-          0%, 35%  { opacity: 0; transform: translateX(40px) scale(0.95); }
-          45%, 90% { opacity: 1; transform: translateX(0) scale(1); }
-          100%     { opacity: 0; transform: translateX(40px) scale(0.95); }
-        }
-
+        @keyframes slidePhoto1 { 0%,35%{opacity:1;transform:translateX(0) scale(1)} 45%,90%{opacity:0;transform:translateX(-40px) scale(0.95)} 100%{opacity:1;transform:translateX(0) scale(1)} }
+        @keyframes slidePhoto2 { 0%,35%{opacity:0;transform:translateX(40px) scale(0.95)} 45%,90%{opacity:1;transform:translateX(0) scale(1)} 100%{opacity:0;transform:translateX(40px) scale(0.95)} }
         @media (max-width: 1024px) {
           .hero-section { padding: 60px 40px 120px !important; }
           .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }

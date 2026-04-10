@@ -3,7 +3,7 @@ import { useLang } from '../../context/LanguageContext'
 
 const Skills = forwardRef(({ t, data, activeSection }, ref) => {
   const { tr } = useLang()
-  
+
   const categories = [
     { key: 'frontend', label: 'Frontend' },
     { key: 'backend', label: 'Backend' },
@@ -13,41 +13,28 @@ const Skills = forwardRef(({ t, data, activeSection }, ref) => {
   const softSkills = data.skills.filter(s => s.category === 'soft_skill')
 
   return (
-    <section
-      id="skills"
-      ref={ref}
-      style={{
-        minHeight: '100vh',
-        padding: '100px 64px',
-        display: 'flex',
-        alignItems: 'center',
-        position: 'relative',
-      }}
-    >
-      <div style={{ width: '100%', maxWidth: '1000px' }}>
+    <section id="skills" ref={ref} style={{
+      minHeight: '100vh', padding: '100px 64px',
+      display: 'flex', alignItems: 'center', position: 'relative',
+    }}>
+      <div style={{ width: '100%', maxWidth: '1100px' }}>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
           <div style={{ width: '32px', height: '1px', background: t.accent }} />
-          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>{tr.skills}</span>
+          <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.accent }}>{tr.skillsLabel}</span>
         </div>
 
         <h2 style={{ fontSize: '48px', fontWeight: '700', letterSpacing: '-2px', marginBottom: '64px' }}>
-          Tech <span style={{ color: t.accent }}>Stack</span>
+          {tr.skillsTitle} <span style={{ color: t.accent }}>{tr.skillsTitleAccent}</span>
         </h2>
 
-        {/* Tech skills */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '48px', marginBottom: '64px' }} className="skills-grid">
           {categories.map(cat => {
             const catSkills = data.skills.filter(s => s.category === cat.key)
             if (catSkills.length === 0) return null
             return (
               <div key={cat.key}>
-                <div style={{
-                  fontSize: '9px', letterSpacing: '3px',
-                  textTransform: 'uppercase', color: t.textFaint,
-                  marginBottom: '24px', display: 'flex',
-                  alignItems: 'center', gap: '10px',
-                }}>
+                <div style={{ fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', color: t.textFaint, marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                   {cat.label}
                   <span style={{ flex: 1, height: '0.5px', background: t.border }} />
                 </div>
@@ -74,7 +61,6 @@ const Skills = forwardRef(({ t, data, activeSection }, ref) => {
           })}
         </div>
 
-        {/* Soft skills */}
         {softSkills.length > 0 && (
           <div>
             <div style={{ fontSize: '9px', letterSpacing: '3px', textTransform: 'uppercase', color: t.textFaint, marginBottom: '16px' }}>
@@ -82,14 +68,9 @@ const Skills = forwardRef(({ t, data, activeSection }, ref) => {
             </div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
               {softSkills.map(skill => (
-                <span key={skill.id} style={{
-                  fontSize: '12px', padding: '8px 20px',
-                  borderRadius: '20px', border: `0.5px solid ${t.border2}`,
-                  color: t.textMuted, transition: 'all 0.2s',
-                }}
+                <span key={skill.id} style={{ fontSize: '12px', padding: '8px 20px', borderRadius: '20px', border: `0.5px solid ${t.border2}`, color: t.textMuted, transition: 'all 0.2s' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = t.pink; e.currentTarget.style.color = t.pink }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor = t.border2; e.currentTarget.style.color = t.textMuted }}
-                >
+                  onMouseLeave={e => { e.currentTarget.style.borderColor = t.border2; e.currentTarget.style.color = t.textMuted }}>
                   {skill.name}
                 </span>
               ))}
@@ -99,12 +80,8 @@ const Skills = forwardRef(({ t, data, activeSection }, ref) => {
       </div>
 
       <style>{`
-        @media (max-width: 1024px) {
-          .skills-grid { grid-template-columns: 1fr 1fr !important; }
-        }
-        @media (max-width: 768px) {
-          .skills-grid { grid-template-columns: 1fr !important; }
-        }
+        @media (max-width: 1024px) { .skills-grid { grid-template-columns: 1fr 1fr !important; } }
+        @media (max-width: 768px) { .skills-grid { grid-template-columns: 1fr !important; } }
       `}</style>
     </section>
   )
