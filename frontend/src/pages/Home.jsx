@@ -4,6 +4,7 @@ import DataLoader from '../components/DataLoader'
 import CustomCursor from '../components/CustomCursor'
 import Sidebar from '../components/Sidebar'
 import Hero from '../components/sections/Hero'
+import LyricsSection from '../components/sections/LyricsSection'
 import About from '../components/sections/About'
 import Skills from '../components/sections/Skills'
 import Projects from '../components/sections/Projects'
@@ -16,26 +17,16 @@ import Blog from '../components/sections/Blog'
 import Contact from '../components/sections/Contact'
 import api from '../services/api'
 import { startKeepAlive } from '../utils/keepAlive'
-import LyricsSection from '../components/sections/LyricsSection'
 
 function Home() {
   const [introLoading, setIntroLoading] = useState(true)
   const [dataLoading, setDataLoading] = useState(true)
   const [isDark, setIsDark] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
-
   const [data, setData] = useState({
-    projects: [],
-    skills: [],
-    experiences: [],
-    certificates: [],
-    testimonials: [],
-    blogs: [],
-    educations: [],
+    projects: [], skills: [], experiences: [],
+    certificates: [], testimonials: [], blogs: [], educations: [],
   })
-
-  // ✅ FIX: TRANSLATION DEFAULT (ANTI ERROR)
-  const tr = {}
 
   const refs = {
     hero: useRef(null),
@@ -71,86 +62,69 @@ function Home() {
   }
 
   useEffect(() => {
-  if (sessionStorage.getItem('portfolioVisited')) {
-    setIntroLoading(false)
-  }
-  sessionStorage.setItem('portfolioVisited', 'true')
+    if (sessionStorage.getItem('portfolioVisited')) {
+      setIntroLoading(false)
+    }
+    sessionStorage.setItem('portfolioVisited', 'true')
 
-  startKeepAlive()
-  Promise.all([
-    api.get('/projects'),
-    api.get('/skills'),
-    api.get('/experiences'),
-    api.get('/certificates'),
-    api.get('/testimonials'),
-    api.get('/blogs'),
-    api.get('/educations'),
-  ]).then(([p, s, e, c, t2, b, edu]) => {
-    setData({
-      projects: p.data,
-      skills: s.data,
-      experiences: e.data,
-      certificates: c.data,
-      testimonials: t2.data,
-      blogs: b.data,
-      educations: edu.data,
-    })
-    setDataLoading(false)
-  }).catch(() => setDataLoading(false))
-}, [])
+    startKeepAlive()
+    Promise.all([
+      api.get('/projects'),
+      api.get('/skills'),
+      api.get('/experiences'),
+      api.get('/certificates'),
+      api.get('/testimonials'),
+      api.get('/blogs'),
+      api.get('/educations'),
+    ]).then(([p, s, e, c, t2, b, edu]) => {
+      setData({
+        projects: p.data,
+        skills: s.data,
+        experiences: e.data,
+        certificates: c.data,
+        testimonials: t2.data,
+        blogs: b.data,
+        educations: edu.data,
+      })
+      setDataLoading(false)
+    }).catch(() => setDataLoading(false))
+  }, [])
 
   useEffect(() => {
     if (introLoading || dataLoading) return
-
     const observer = new IntersectionObserver(
-      entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) setActiveSection(e.target.id)
-        })
-      },
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) setActiveSection(e.target.id)
+      }),
       { threshold: 0.35 }
     )
-
     Object.values(refs).forEach(r => {
       if (r.current) observer.observe(r.current)
     })
-
     return () => observer.disconnect()
   }, [introLoading, dataLoading])
 
   const navigateTo = (id) =>
     refs[id]?.current?.scrollIntoView({ behavior: 'smooth' })
 
-  if (introLoading)
-    return <LoadingScreen onComplete={() => setIntroLoading(false)} />
-
+  if (introLoading) return <LoadingScreen onComplete={() => setIntroLoading(false)} />
   if (dataLoading) return <DataLoader isDark={isDark} />
 
   return (
-    <div
-      style={{
-        background: t.bg,
-        color: t.text,
-        transition: 'background 0.4s, color 0.4s',
-        cursor: 'none',
-        fontFamily: "'Inter', sans-serif",
-      }}
-    >
+    <div style={{
+      background: t.bg, color: t.text,
+      transition: 'background 0.4s, color 0.4s',
+      cursor: 'none', fontFamily: "'Inter', sans-serif",
+    }}>
       <CustomCursor isDark={isDark} />
 
-      <div
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          zIndex: 0,
-          pointerEvents: 'none',
-          backgroundImage: `linear-gradient(${t.grid} 1px, transparent 1px), linear-gradient(90deg, ${t.grid} 1px, transparent 1px)`,
-          backgroundSize: '48px 48px',
-        }}
-      />
+      <div style={{
+        position: 'fixed', top: 0, left: 0,
+        width: '100vw', height: '100vh',
+        zIndex: 0, pointerEvents: 'none',
+        backgroundImage: `linear-gradient(${t.grid} 1px, transparent 1px), linear-gradient(90deg, ${t.grid} 1px, transparent 1px)`,
+        backgroundSize: '48px 48px',
+      }} />
 
       <Sidebar
         activeSection={activeSection}
@@ -159,33 +133,22 @@ function Home() {
         onToggleMode={() => setIsDark(!isDark)}
       />
 
-      <main
-        style={{
-          marginLeft: '52px',
-          position: 'relative',
-          zIndex: 1,
-          minHeight: '100vh',
-        }}
-        id="main-content"
-      >
-        <Hero ref={refs.hero} t={t} tr={tr} data={data} navigateTo={navigateTo} />
-        <main style={{ marginLeft: '52px', position: 'relative', zIndex: 1 }} id="main-content">
-  <Hero ref={refs.hero} t={t} data={data} navigateTo={navigateTo} />
-  <LyricsSection ref={refs.lyrics} t={t} />   {/* ← tambah ini */}
-  <About ref={refs.about} t={t} />
-  <Skills ref={refs.skills} t={t} data={data} activeSection={activeSection} />
-  ...
-</main>
-        <About ref={refs.about} t={t} tr={tr} />
-        <Skills ref={refs.skills} t={t} tr={tr} data={data} activeSection={activeSection} />
-        <Projects ref={refs.projects} t={t} tr={tr} data={data} />
-        <Experience ref={refs.experience} t={t} tr={tr} data={data} />
-        <Education ref={refs.education} t={t} tr={tr} data={data} />
-        <Certificates ref={refs.certificates} t={t} tr={tr} data={data} />
-        <Testimonials ref={refs.testimonials} t={t} tr={tr} data={data} />
-        <FunFacts ref={refs.funfacts} t={t} tr={tr} />
-        <Blog ref={refs.blog} t={t} tr={tr} data={data} />
-        <Contact ref={refs.contact} t={t} tr={tr} />
+      <main style={{
+        marginLeft: '52px', position: 'relative',
+        zIndex: 1, minHeight: '100vh',
+      }} id="main-content">
+        <Hero ref={refs.hero} t={t} data={data} navigateTo={navigateTo} />
+        <LyricsSection ref={refs.lyrics} t={t} />
+        <About ref={refs.about} t={t} />
+        <Skills ref={refs.skills} t={t} data={data} activeSection={activeSection} />
+        <Projects ref={refs.projects} t={t} data={data} />
+        <Experience ref={refs.experience} t={t} data={data} />
+        <Education ref={refs.education} t={t} data={data} />
+        <Certificates ref={refs.certificates} t={t} data={data} />
+        <Testimonials ref={refs.testimonials} t={t} data={data} />
+        <FunFacts ref={refs.funfacts} t={t} />
+        <Blog ref={refs.blog} t={t} data={data} />
+        <Contact ref={refs.contact} t={t} />
       </main>
 
       <style>{`
