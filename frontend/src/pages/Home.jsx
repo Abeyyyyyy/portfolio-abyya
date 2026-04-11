@@ -73,7 +73,6 @@ function Home() {
   useEffect(() => {
   if (sessionStorage.getItem('portfolioVisited')) {
     setIntroLoading(false)
-    setDataLoading(true)
   }
   sessionStorage.setItem('portfolioVisited', 'true')
 
@@ -88,22 +87,16 @@ function Home() {
     api.get('/educations'),
   ]).then(([p, s, e, c, t2, b, edu]) => {
     setData({
-      projects: p.data, skills: s.data,
-      experiences: e.data, certificates: c.data,
-      testimonials: t2.data, blogs: b.data,
+      projects: p.data,
+      skills: s.data,
+      experiences: e.data,
+      certificates: c.data,
+      testimonials: t2.data,
+      blogs: b.data,
       educations: edu.data,
     })
     setDataLoading(false)
   }).catch(() => setDataLoading(false))
-}, [])
-
-  useEffect(() => {
-  if (sessionStorage.getItem('visited')) {
-    setIntroLoading(false)
-  }
-  sessionStorage.setItem('visited', 'true')
-  startKeepAlive()
-  Promise.all([...])
 }, [])
 
   useEffect(() => {
