@@ -16,6 +16,7 @@ import Blog from '../components/sections/Blog'
 import Contact from '../components/sections/Contact'
 import api from '../services/api'
 import { startKeepAlive } from '../utils/keepAlive'
+import LyricsSection from '../components/sections/LyricsSection'
 
 function Home() {
   const [introLoading, setIntroLoading] = useState(true)
@@ -48,6 +49,7 @@ function Home() {
     funfacts: useRef(null),
     blog: useRef(null),
     contact: useRef(null),
+    lyrics: useRef(null),
   }
 
   const t = {
@@ -69,32 +71,40 @@ function Home() {
   }
 
   useEffect(() => {
-    startKeepAlive()
-    Promise.all([
-      api.get('/projects'),
-      api.get('/skills'),
-      api.get('/experiences'),
-      api.get('/certificates'),
-      api.get('/testimonials'),
-      api.get('/blogs'),
-      api.get('/educations'),
-    ])
-      .then(([p, s, e, c, t2, b, edu]) => {
-        setData({
-          projects: p.data,
-          skills: s.data,
-          experiences: e.data,
-          certificates: c.data,
-          testimonials: t2.data,
-          blogs: b.data,
-          educations: edu.data,
-        })
-        setDataLoading(false)
-      })
-      .catch(() => {
-        setDataLoading(false)
-      })
-  }, [])
+  if (sessionStorage.getItem('portfolioVisited')) {
+    setIntroLoading(false)
+    setDataLoading(true)
+  }
+  sessionStorage.setItem('portfolioVisited', 'true')
+
+  startKeepAlive()
+  Promise.all([
+    api.get('/projects'),
+    api.get('/skills'),
+    api.get('/experiences'),
+    api.get('/certificates'),
+    api.get('/testimonials'),
+    api.get('/blogs'),
+    api.get('/educations'),
+  ]).then(([p, s, e, c, t2, b, edu]) => {
+    setData({
+      projects: p.data, skills: s.data,
+      experiences: e.data, certificates: c.data,
+      testimonials: t2.data, blogs: b.data,
+      educations: edu.data,
+    })
+    setDataLoading(false)
+  }).catch(() => setDataLoading(false))
+}, [])
+
+  useEffect(() => {
+  if (sessionStorage.getItem('visited')) {
+    setIntroLoading(false)
+  }
+  sessionStorage.setItem('visited', 'true')
+  startKeepAlive()
+  Promise.all([...])
+}, [])
 
   useEffect(() => {
     if (introLoading || dataLoading) return
@@ -166,6 +176,13 @@ function Home() {
         id="main-content"
       >
         <Hero ref={refs.hero} t={t} tr={tr} data={data} navigateTo={navigateTo} />
+        <main style={{ marginLeft: '52px', position: 'relative', zIndex: 1 }} id="main-content">
+  <Hero ref={refs.hero} t={t} data={data} navigateTo={navigateTo} />
+  <LyricsSection ref={refs.lyrics} t={t} />   {/* ← tambah ini */}
+  <About ref={refs.about} t={t} />
+  <Skills ref={refs.skills} t={t} data={data} activeSection={activeSection} />
+  ...
+</main>
         <About ref={refs.about} t={t} tr={tr} />
         <Skills ref={refs.skills} t={t} tr={tr} data={data} activeSection={activeSection} />
         <Projects ref={refs.projects} t={t} tr={tr} data={data} />

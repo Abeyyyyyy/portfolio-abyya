@@ -9,12 +9,9 @@ function BlogDetail() {
   const [loading, setLoading] = useState(true)
   const [isDark, setIsDark] = useState(false)
 
-  const handleBack = () => {
-    navigate('/')
-    setTimeout(() => {
-      document.getElementById('blog')?.scrollIntoView({ behavior: 'smooth' })
-    }, 800)
-  }
+ const handleBack = () => {
+  navigate('/')
+}
 
   const t = {
     bg: isDark ? '#0D0D0D' : '#F2E8DF',
