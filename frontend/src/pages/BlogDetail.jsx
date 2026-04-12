@@ -28,10 +28,9 @@ function BlogDetail() {
   }
 
   useEffect(() => {
-    api.get(`/blogs/${id}`)
-      .then(res => { setBlog(res.data); setLoading(false) })
-      .catch(() => { setLoading(false); navigate('/') })
-  }, [id])
+  sessionStorage.setItem('portfolioVisited', 'true')
+}, [])
+
 
   if (loading) return (
     <div style={{ minHeight: '100vh', background: t.bg, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
