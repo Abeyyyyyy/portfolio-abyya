@@ -12,7 +12,7 @@ RUN apk add --no-cache \
     libzip-dev \
     oniguruma-dev
 
-# Install extension PHP untuk database
+# Install extension PHP
 RUN docker-php-ext-install pdo pdo_pgsql zip mbstring
 
 # Install Composer
@@ -24,7 +24,7 @@ COPY . .
 # Install library Laravel
 RUN composer install --no-dev --optimize-autoloader
 
-# Izin folder agar tidak Error 500
+# Izin folder storage
 RUN chmod -R 777 storage bootstrap/cache
 
 # Jalankan server
