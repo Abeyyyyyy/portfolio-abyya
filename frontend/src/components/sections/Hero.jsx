@@ -5,6 +5,35 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
   const { tr } = useLang()
   const [typed, setTyped] = useState('')
 
+  // 1. PINDAHKAN STATE KE DALAM KOMPONEN
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [formData, setFormData] = useState({ 
+    name: '', email: '', status: '', company: '', reason: '' 
+  });
+
+  // 2. PINDAHKAN FUNGSI HANDLER KE DALAM KOMPONEN
+  const handleDownload = (e) => {
+    e.preventDefault();
+    
+    // Validasi Keamanan (Anti-Asal)
+    const isGibberish = /(.)\1\1/.test(formData.name) || !/[aeiouy]/i.test(formData.name);
+    
+    if (isGibberish) {
+      alert("Mohon masukkan nama asli yang valid.");
+      return;
+    }
+
+    // Trigger Download
+    const link = document.createElement('a');
+    link.href = '/cv-abiyya.pdf'; 
+    link.download = 'CV_Abiyya.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    setIsModalOpen(false);
+  };
+
   useEffect(() => {
     const phrases = [
       tr.viewWork === 'View Work' ? 'Fullstack Web Developer' : tr.viewWork === '查看作品' ? '全栈网页开发者' : 'Fullstack Web Developer',
@@ -47,7 +76,6 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
             </div>
           </div>
 
-          {/* Eyebrow */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '32px' }}>
             <div style={{ width: '32px', height: '1px', background: t.accent, flexShrink: 0 }} />
             <span style={{ fontSize: '10px', letterSpacing: '4px', textTransform: 'uppercase', color: t.textFaint }} className="hero-eyebrow">
@@ -55,25 +83,21 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
             </span>
           </div>
 
-          {/* Name */}
           <h1 style={{ fontSize: '72px', fontWeight: '700', lineHeight: 1.0, letterSpacing: '-3px', marginBottom: '0' }}>
             <span style={{ display: 'block', color: t.text }} className="hero-name">Abiyya</span>
             <span style={{ display: 'block', color: t.accent }} className="hero-name">Hamdan</span>
             <span style={{ display: 'block', color: t.textFaint, fontWeight: '300', fontSize: '58px' }} className="hero-name-sub">Nurwandha</span>
           </h1>
 
-          {/* Typing */}
           <div style={{ height: '28px', display: 'flex', alignItems: 'center', gap: '4px', margin: '24px 0 28px' }}>
             <span style={{ fontSize: '17px', color: t.textMuted }}>{typed}</span>
             <span style={{ display: 'inline-block', width: '2px', height: '20px', background: t.accent, animation: 'blink 1s step-end infinite' }} />
           </div>
 
-          {/* Desc */}
           <p style={{ fontSize: '15px', color: t.textFaint, lineHeight: 1.9, maxWidth: '460px', marginBottom: '48px' }} className="hero-desc">
             {tr.heroDesc}
           </p>
 
-          {/* Buttons */}
           <div style={{ display: 'flex', gap: '14px', alignItems: 'center', flexWrap: 'wrap' }} className="hero-buttons">
             <button onClick={() => navigateTo('projects')}
               style={{ background: t.accent, color: '#F2E8DF', border: 'none', borderRadius: '8px', padding: '15px 36px', fontSize: '11px', fontWeight: '600', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'transform 0.2s, box-shadow 0.2s', boxShadow: '0 8px 24px rgba(123,30,43,0.25)' }}
@@ -82,12 +106,12 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
               {tr.viewWork}
             </button>
 
-            <a href="/cv-abiyya.pdf" download
-              style={{ background: t.navySoft, color: t.navy, border: `1px solid ${t.navy}`, borderRadius: '8px', padding: '15px 36px', fontSize: '11px', fontWeight: '600', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'all 0.2s', textDecoration: 'none', display: 'inline-block' }}
+            <button onClick={() => setIsModalOpen(true)}
+              style={{ background: t.navySoft, color: t.navy, border: `1px solid ${t.navy}`, borderRadius: '8px', padding: '15px 36px', fontSize: '11px', fontWeight: '600', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'all 0.2s' }}
               onMouseEnter={e => { e.currentTarget.style.background = t.navy; e.currentTarget.style.color = '#F2E8DF'; e.currentTarget.style.transform = 'translateY(-3px)' }}
               onMouseLeave={e => { e.currentTarget.style.background = t.navySoft; e.currentTarget.style.color = t.navy; e.currentTarget.style.transform = 'translateY(0)' }}>
               {tr.downloadCV}
-            </a>
+            </button>
 
             <button onClick={() => navigateTo('contact')}
               style={{ background: 'transparent', color: t.textMuted, border: `1px solid ${t.border2}`, borderRadius: '8px', padding: '15px 36px', fontSize: '11px', letterSpacing: '2.5px', textTransform: 'uppercase', cursor: 'none', transition: 'all 0.2s' }}
@@ -97,7 +121,6 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
             </button>
           </div>
 
-          {/* Stats mobile */}
           <div style={{ display: 'none', gap: '32px', marginTop: '32px' }} className="hero-stats-mobile">
             {[
               { n: `${data.projects.length}+`, l: 'Projects' },
@@ -147,7 +170,6 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
         </div>
       </div>
 
-      {/* Stats desktop */}
       <div style={{ position: 'absolute', bottom: '48px', right: '64px', display: 'flex', gap: '48px' }} className="hero-stats">
         {[
           { n: `${data.projects.length}+`, l: 'Projects' },
@@ -189,6 +211,42 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
           .hero-name-sub { font-size: 32px !important; }
         }
       `}</style>
+
+      {/* --- MODAL SECTION --- */}
+      {isModalOpen && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 10000, background: 'rgba(0,0,0,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(8px)' }}>
+          <div style={{ background: t.bg, border: `1px solid ${t.border2}`, padding: '30px', borderRadius: '16px', width: '90%', maxWidth: '380px' }}>
+            <h2 style={{ color: t.text, fontSize: '18px', marginBottom: '20px' }}>Verify Information</h2>
+            <form onSubmit={handleDownload} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <input type="text" placeholder="Full Name" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
+                onChange={e => setFormData({...formData, name: e.target.value})} 
+              />
+              <input type="email" placeholder="Email" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
+                onChange={e => setFormData({...formData, email: e.target.value})} 
+              />
+              <select required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
+                onChange={e => setFormData({...formData, status: e.target.value})}
+              >
+                <option value="">Status</option>
+                <option value="HRD">HRD / Recruiter</option>
+                <option value="Engineer">Engineer / User</option>
+                <option value="Dev">Developer / Other</option>
+              </select>
+              <input type="text" placeholder="Company" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
+                onChange={e => setFormData({...formData, company: e.target.value})} 
+              />
+              <textarea placeholder="Reason to download" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', minHeight: '80px', outline: 'none', resize: 'none' }} 
+                onChange={e => setFormData({...formData, reason: e.target.value})} 
+              />
+              <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                <button type="button" onClick={() => setIsModalOpen(false)} style={{ flex: 1, padding: '12px', borderRadius: '8px', border: 'none', background: t.border2, color: t.text, cursor: 'pointer' }}>Cancel</button>
+                <button type="submit" style={{ flex: 2, padding: '12px', borderRadius: '8px', border: 'none', background: t.accent, color: '#fff', fontWeight: '700', cursor: 'pointer' }}>Verify & Download</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
     </section>
   )
 })
