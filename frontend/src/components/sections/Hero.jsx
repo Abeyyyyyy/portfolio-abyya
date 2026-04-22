@@ -1,5 +1,6 @@
 import { useState, useEffect, forwardRef } from 'react'
 import { useLang } from '../../context/LanguageContext'
+import api from '../../services/api'
 
 const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
   const { tr } = useLang()
@@ -12,26 +13,36 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
   });
 
   // 2. PINDAHKAN FUNGSI HANDLER KE DALAM KOMPONEN
-  const handleDownload = (e) => {
+  const handleDownload = async (e) => {
     e.preventDefault();
     
     // Validasi Keamanan (Anti-Asal)
-    const isGibberish = /(.)\1\1/.test(formData.name) || !/[aeiouy]/i.test(formData.name);
+    const isGibberish = formData.name.length < 3 || formData.reason.length < 10 || 
+                      /(.)\1\1\1/.test(formData.name) || // 4 characters repeated
+                      !/[aeiouy]/i.test(formData.name);
     
     if (isGibberish) {
-      alert("Mohon masukkan nama asli yang valid.");
+      alert("Mohon masukkan data yang valid dan bukan asal-asalan.");
       return;
     }
 
-    // Trigger Download
-    const link = document.createElement('a');
-    link.href = '/cv-abiyya.pdf'; 
-    link.download = 'CV_Abiyya.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    
-    setIsModalOpen(false);
+    try {
+      await api.post('/cv-downloads', formData);
+      
+      // Trigger Download
+      const link = document.createElement('a');
+      link.href = '/cv-abiyya.pdf'; 
+      link.download = 'CV_Abiyya.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      setIsModalOpen(false);
+      alert("Terima kasih! CV akan segera diunduh.");
+    } catch (error) {
+      console.error(error);
+      alert(error.response?.data?.message || "Terjadi kesalahan saat mengirim data.");
+    }
   };
 
   useEffect(() => {
@@ -216,31 +227,32 @@ const Hero = forwardRef(({ t, data, navigateTo }, ref) => {
       {isModalOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 10000, background: 'rgba(0,0,0,0.9)', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(8px)' }}>
           <div style={{ background: t.bg, border: `1px solid ${t.border2}`, padding: '30px', borderRadius: '16px', width: '90%', maxWidth: '380px' }}>
-            <h2 style={{ color: t.text, fontSize: '18px', marginBottom: '20px' }}>Verify Information</h2>
+            <h2 style={{ color: t.text, fontSize: '18px', marginBottom: '20px' }}>Verifikasi Data Unduh CV</h2>
             <form onSubmit={handleDownload} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <input type="text" placeholder="Full Name" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
+              <input type="text" placeholder="Nama Lengkap" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
                 onChange={e => setFormData({...formData, name: e.target.value})} 
               />
-              <input type="email" placeholder="Email" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
+              <input type="email" placeholder="Alamat Email" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
                 onChange={e => setFormData({...formData, email: e.target.value})} 
               />
               <select required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
                 onChange={e => setFormData({...formData, status: e.target.value})}
               >
-                <option value="">Status</option>
-                <option value="HRD">HRD / Recruiter</option>
-                <option value="Engineer">Engineer / User</option>
-                <option value="Dev">Developer / Other</option>
+                <option value="">Pilih Status</option>
+                <option value="HRD / Recruiter">HRD / Recruiter</option>
+                <option value="Engineer / User">Engineer / User</option>
+                <option value="Developer / Freelancer">Developer / Freelancer</option>
+                <option value="Lainnya">Lainnya</option>
               </select>
-              <input type="text" placeholder="Company" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
+              <input type="text" placeholder="Nama Perusahaan / Instansi" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', outline: 'none' }} 
                 onChange={e => setFormData({...formData, company: e.target.value})} 
               />
-              <textarea placeholder="Reason to download" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', minHeight: '80px', outline: 'none', resize: 'none' }} 
+              <textarea placeholder="Alasan mengunduh CV" required style={{ padding: '12px', background: t.bg2, border: `1px solid ${t.border2}`, color: t.text, borderRadius: '8px', minHeight: '80px', outline: 'none', resize: 'none' }} 
                 onChange={e => setFormData({...formData, reason: e.target.value})} 
               />
               <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
-                <button type="button" onClick={() => setIsModalOpen(false)} style={{ flex: 1, padding: '12px', borderRadius: '8px', border: 'none', background: t.border2, color: t.text, cursor: 'pointer' }}>Cancel</button>
-                <button type="submit" style={{ flex: 2, padding: '12px', borderRadius: '8px', border: 'none', background: t.accent, color: '#fff', fontWeight: '700', cursor: 'pointer' }}>Verify & Download</button>
+                <button type="button" onClick={() => setIsModalOpen(false)} style={{ flex: 1, padding: '12px', borderRadius: '8px', border: 'none', background: t.border2, color: t.text, cursor: 'pointer' }}>Batal</button>
+                <button type="submit" style={{ flex: 2, padding: '12px', borderRadius: '8px', border: 'none', background: t.accent, color: '#fff', fontWeight: '700', cursor: 'pointer' }}>Verifikasi & Unduh</button>
               </div>
             </form>
           </div>

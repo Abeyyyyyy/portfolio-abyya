@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\CertificateController;
 use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Api\CvDownloadController;
 
 // ✅ PUBLIC ROUTES
 Route::get('/projects', [ProjectController::class, 'index']);
@@ -21,6 +22,7 @@ Route::get('/certificates', [CertificateController::class, 'index']);
 Route::post('/contacts', [ContactController::class, 'store']);
 Route::get('/testimonials', [TestimonialController::class, 'index']);
 Route::get('/blogs', [BlogController::class, 'index']);
+Route::post('/cv-downloads', [CvDownloadController::class, 'store']);
 
 // 🔐 AUTH
 Route::post('/login', [AuthController::class, 'login']);
@@ -61,6 +63,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/blogs', [BlogController::class, 'store']);
     Route::put('/blogs/{id}', [BlogController::class, 'update']);
     Route::delete('/blogs/{id}', [BlogController::class, 'destroy']);
+
+    Route::get('/cv-downloads', [CvDownloadController::class, 'index']);
+    Route::delete('/cv-downloads/{id}', [CvDownloadController::class, 'destroy']);
 });
 
 Route::get('/blogs/{id}', [BlogController::class, 'show']);

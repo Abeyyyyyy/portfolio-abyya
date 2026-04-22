@@ -9,6 +9,7 @@ import AdminCertificates from "./Certificates";
 import AdminContacts from "./Contacts";
 import AdminTestimonials from './Testimonials'
 import AdminBlogs from './Blogs'
+import AdminCvDownloads from './CvDownloads'
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -90,6 +91,7 @@ function AdminDashboard() {
     { id: 'testimonials', label: 'Testimonials', icon: '◯' },
     { id: 'blogs', label: 'Blog', icon: '✦' },
     { id: 'contacts', label: 'Messages', icon: '◈' },
+    { id: 'cv_downloads', label: 'CV Logs', icon: '📄' },
   ]
 
   const s = {
@@ -445,6 +447,7 @@ function AdminDashboard() {
           {activeMenu === "contacts" && <AdminContacts t={t} />}
           {activeMenu === 'testimonials' && <AdminTestimonials t={t} />}
           {activeMenu === 'blogs' && <AdminBlogs t={t} />}
+          {activeMenu === 'cv_downloads' && <AdminCvDownloads t={t} />}
 
           {![
             "dashboard",
@@ -454,6 +457,7 @@ function AdminDashboard() {
             "educations",
             "certificates",
             "contacts",
+            "cv_downloads",
           ].includes(activeMenu) && (
             <div style={{ color: t.textFaint, fontSize: "13px" }}>
               Halaman <span style={{ color: t.accent }}>{activeMenu}</span> —
